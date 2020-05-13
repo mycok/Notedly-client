@@ -4,7 +4,8 @@
   "description": "social note client application",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "dev": "parcel src/index.html"
   },
   "repository": {
     "type": "git",
