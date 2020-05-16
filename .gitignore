@@ -21,7 +21,6 @@
 .eslintcache
 .parcel-cache
 
-
 #  envs
 **.env**
 
