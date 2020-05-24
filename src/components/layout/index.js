@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { Header } from '../Header';
-import { Navigation } from '../Navigation';
+import Header from '../Header';
+import Navigation from '../Navigation';
 
 const Wrapper = styled.div`
   @media (min-width: 700px) {
@@ -33,7 +33,7 @@ const Main = styled.main`
   }
 `;
 
-export const Layout = ({ children }) => (
+const Layout = ({ children }) => (
   <>
     <Header />
     <Wrapper>
@@ -47,3 +47,5 @@ Layout.propTypes = {
   children: PropTypes.oneOfType([PropTypes.object, PropTypes.symbol])
     .isRequired,
 };
+
+export default Layout;

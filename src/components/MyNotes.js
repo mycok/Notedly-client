@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-export const MyNotes = () => {
+const MyNotes = () => {
   useEffect(() => {
     document.title = 'Upated Title';
   });
@@ -10,3 +10,5 @@ export const MyNotes = () => {
     </div>
   );
 };
+
+export default MyNotes;

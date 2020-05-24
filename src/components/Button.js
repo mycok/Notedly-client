@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Button = styled.button`
+const Button = styled.button`
   display: block;
   padding: 10px;
   border: none;
@@ -16,3 +16,5 @@ export const Button = styled.button`
     background-color: #005fa3;
   }
 `;
+
+export default Button;
