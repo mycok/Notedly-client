@@ -1,14 +1,5 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
-const MyNotes = () => {
-  useEffect(() => {
-    document.title = 'Upated Title';
-  });
-  return (
-    <div>
-      <p>These are my notes</p>
-    </div>
-  );
-};
+const MyNotes = () => <p>This is my notes page</p>;
 
 export default MyNotes;
