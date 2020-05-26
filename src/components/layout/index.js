@@ -1,51 +1,41 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
+// import PropTypes from 'prop-types';
+import { useLocation } from 'react-router-dom';
+import { Grid, Flex } from '@chakra-ui/core';
 
-import Header from '../Header';
-import Navigation from '../Navigation';
+import Authors from '../author/Authors';
+import Header from '../core/Header';
+import Favorites from '../Note/Favorites';
+import Home from '../core/Home';
+import MyNotes from '../Note/MyNotes';
 
-const Wrapper = styled.div`
-  @media (min-width: 700px) {
-    display: flex;
-    top: 0px;
-    position: relative;
-    height: calc(100% - 64px);
-    width: 100%
-    flex: auto;
-    flex-direction: column;
-    background-color: orange;
-  }
-`;
-
-const Main = styled.main`
-  position: fixed;
-  height: calc(100% - 185px);
-  width: 100%;
-  padding: 1em;
-  overflow-y: scroll;
-  background-color: gray;
-  @media (min-width: 700px) {
-    flex: 1;
-    margin-left: 220px;
-    height: calc(100% - 64px);
-    width: calc(100% - 220px);
-  }
-`;
-
-const Layout = ({ children }) => (
-  <>
-    <Header />
-    <Wrapper>
-      <Navigation />
-      <Main>{children}</Main>
-    </Wrapper>
-  </>
-);
-
-Layout.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.object, PropTypes.symbol])
-    .isRequired,
+const Layout = () => {
+  const { pathname } = useLocation();
+  return (
+    <>
+      <Header />
+      <Grid
+        templateColumns="repeat(auto-fit, minmax(100px, 1fr))"
+        columnGap={4}
+        w="100%"
+      >
+        <Flex bg="blue.900" align="baseline" justify="center">
+          <Authors />
+        </Flex>
+        <Flex bg="blue.500" align="baseline" justify="center">
+          {pathname === '/my-notes' ? <MyNotes /> : <Home />}
+        </Flex>
+        <Flex bg="blue.100" align="baseline" justify="center">
+          <Favorites />
+        </Flex>
+      </Grid>
+    </>
+  );
 };
+
+// Layout.propTypes = {
+//   children: PropTypes.oneOfType([PropTypes.object, PropTypes.symbol])
+//     .isRequired,
+// };
 
 export default Layout;

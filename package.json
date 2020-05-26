@@ -2,7 +2,7 @@
   "name": "notedly-client",
   "version": "1.0.0",
   "description": "social note client application",
-  "main": "index.js",
+  "main": "index.html",
   "scripts": {
     "test": "jest",
     "dev": "parcel src/index.html"
@@ -50,16 +50,18 @@
   },
   "dependencies": {
     "@apollo/client": "^3.0.0-beta.44",
+    "@chakra-ui/core": "^0.8.0",
+    "@emotion/core": "^10.0.28",
+    "@emotion/styled": "^10.0.27",
     "@types/react": "^16.9.35",
     "apollo-link-context": "^1.0.20",
     "date-fns": "^2.13.0",
+    "emotion-theming": "^10.0.27",
     "graphql": "^15.0.0",
-    "normalize.css": "^8.0.1",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-markdown": "^4.3.1",
-    "react-router-dom": "^5.2.0",
-    "styled-components": "^5.1.0"
+    "react-router-dom": "^5.2.0"
   }
 }

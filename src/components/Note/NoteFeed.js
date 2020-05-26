@@ -8,6 +8,10 @@ const NoteFeed = ({ notes }) => (
 );
 
 NoteFeed.propTypes = {
-  notes: instanceOf(Array).isRequired,
+  notes: instanceOf(Array),
+};
+
+NoteFeed.defaultProps = {
+  notes: [],
 };
 export default NoteFeed;
