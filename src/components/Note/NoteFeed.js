@@ -1,10 +1,12 @@
 import React from 'react';
 import { instanceOf } from 'prop-types';
 
-import Note from './Note';
+import SampleNote from './SampleNote';
 
 const NoteFeed = ({ notes }) => (
-  <div>{notes && notes.map((note) => <Note key={note.id} note={note} />)}</div>
+  <div>
+    {notes && notes.map((note) => <SampleNote key={note.id} note={note} />)}
+  </div>
 );
 
 NoteFeed.propTypes = {

@@ -53,9 +53,12 @@ const Header = (props) => (
     padding="0.8rem"
     bg="gray.700"
     color="white"
+    top={0}
+    pos="sticky"
+    h={{ sm: '10vh', md: '6vh' }}
     {...props}
   >
-    <Flex align="center" mr={5} height="15px" justify="flex-start">
+    <Flex align="center" mr={5} justify="flex-start">
       <Image src={logo} alt="Notedly" />
     </Flex>
 

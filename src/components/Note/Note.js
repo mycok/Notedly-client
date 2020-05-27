@@ -1,33 +1,65 @@
 import React from 'react';
-import { instanceOf } from 'prop-types';
+import { useLocation } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import { format } from 'date-fns';
+import { Avatar, Box, Text } from '@chakra-ui/core';
+import { useQuery } from '@apollo/client';
 
-const Note = ({ note }) => {
-  const {
-    author: { avatar, username },
-    content,
-    createdAt,
-    favoriteCount,
-  } = note;
+import { NoteByIdQuery } from '../../graphql/queries/note';
+import { NotesLoader } from '../core/Loader';
+
+const Note = () => {
+  const { pathname } = useLocation();
+  const noteId = pathname.split('/')[2];
+  const { loading, error, data } = useQuery(NoteByIdQuery, {
+    variables: { id: noteId },
+  });
+
+  if (loading) return <NotesLoader />;
+  if (error) {
+    return (
+      <p style={{ textAlign: 'center' }}>
+        ...please provide a valid token or login.....
+      </p>
+    );
+  }
 
   return (
-    <article>
-      <img src={avatar} alt="{username}avatar" height="50px" width="50px" />
-      {' '}
-      {username}
-      {' '}
-      {format(new Date(createdAt), 'MMM dd yyyy')}
-      {' '}
-      {favoriteCount}
-      {' '}
-      <ReactMarkdown source={content} />
-    </article>
+    <Box
+      borderWidth="1px"
+      rounded="lg"
+      overflow="hidden"
+      mt={5}
+      mb={5}
+      padding={5}
+      borderColor="grey.200"
+      boxShadow="lg"
+    >
+      <Box
+        d="flex"
+        justifyContent="space-between"
+        dir="row"
+        alignItems="center"
+      >
+        <Box d="flex" alignItems="center">
+          <Avatar
+            size="sm"
+            name={data.note.author.username}
+            src={data.note.author.avatar}
+          />
+          <Text ml={2} color="grey" fontSize="sm">
+            {data.note.author.username}
+          </Text>
+        </Box>
+        <Text color="grey" fontSize="sm">
+          {format(new Date(data.note.createdAt), 'MMM dd yyyy')}
+        </Text>
+      </Box>
+      <Box mt={5}>
+        <ReactMarkdown source={data.note.content} />
+      </Box>
+    </Box>
   );
-};
-
-Note.propTypes = {
-  note: instanceOf(Object).isRequired,
 };
 
 export default Note;
