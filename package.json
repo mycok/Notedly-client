@@ -25,6 +25,7 @@
     "@babel/core": "^7.9.6",
     "@babel/preset-env": "^7.9.6",
     "@babel/preset-react": "^7.9.4",
+    "@parcel/transformer-svg-react": "^2.0.0-nightly.1739",
     "babel-plugin-styled-components": "^1.10.7",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "eslint": "^6.8.0",

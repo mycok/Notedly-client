@@ -4,6 +4,7 @@ import { useQuery } from '@apollo/client';
 import { NoteFeedQuery } from '../../graphql/queries/noteFeed';
 import NoteFeed from '../Note/NoteFeed';
 import { NotesLoader } from './Loader';
+import NotFound from './NotFound';
 
 const Home = () => {
   const { loading, error, data } = useQuery(NoteFeedQuery);
@@ -12,7 +13,11 @@ const Home = () => {
 
   if (error) return <p style={{ textAlign: 'center' }}>....Error......</p>;
 
-  return <NoteFeed notes={data.noteFeed.notes} />;
+  return data.noteFeed.notes.length > 0 ? (
+    <NoteFeed notes={data.noteFeed.notes} />
+  ) : (
+    <NotFound />
+  );
 };
 
 export default Home;
