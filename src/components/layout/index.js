@@ -1,13 +1,13 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import { Grid, Flex } from '@chakra-ui/core';
+import { Grid, Box } from '@chakra-ui/core';
 
 import Authors from '../author/Authors';
-import Header from '../core/Header';
 import Favorites from '../Note/Favorites';
 import Home from '../core/Home';
 import MyNotes from '../Note/MyNotes';
 import Note from '../Note/Note';
+import Header from '../core/Header';
 
 const Layout = () => {
   const { pathname } = useLocation();
@@ -16,7 +16,7 @@ const Layout = () => {
   React.useEffect(() => {
     localStorage.setItem(
       'jwt',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWNhZTdkNjI1YWM5YzI5NWFhN2QxY2MiLCJpYXQiOjE1OTA1Mzc2NzIsImV4cCI6MTU5MDYyNDA3Mn0.ITtrgJ-LSaj-vpVWknb9i-lZo2lQj_n7sfSn6qaAqcQ',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWNlZjExMTMwOTljZTE5NjBhMDA2MTIiLCJpYXQiOjE1OTE0MzgyMzIsImV4cCI6MTU5MTUyNDYzMn0.OQIuJx9tlY2tvcTOPgshuIIYoC55RGVZEpyNBddabHY',
     );
   }, []);
 
@@ -34,28 +34,47 @@ const Layout = () => {
   return (
     <>
       <Header />
-      <Grid templateColumns="repeat(3, 1fr)" columnGap={4} w="100vw">
-        <Flex
-          bg="blue.900"
-          align="baseline"
+      <Grid
+        templateColumns="repeat(3, 1fr)"
+        gap={2}
+        height={{ sm: '90vh', md: '94vh' }}
+      >
+        <Box
+          d="flex"
+          align="center"
           justify="center"
-          h="94vh"
           overflow="scroll"
+          bg="#03273f"
+          padding={2}
+          borderWidth="1px"
+          rounded="lg"
         >
           <Authors />
-        </Flex>
-        <Flex align="baseline" justify="center" h="94vh" overflow="scroll">
-          {renderRoute()}
-        </Flex>
-        <Flex
-          bg="blue.100"
-          align="baseline"
+        </Box>
+        <Box
+          d="flex"
+          align="center"
           justify="center"
-          h="94vh"
           overflow="scroll"
+          bg="gray.600"
+          width="1000px"
+          padding={2}
+          borderWidth="1px"
+          rounded="lg"
+        >
+          {renderRoute()}
+        </Box>
+        <Box
+          d="flex"
+          align="center"
+          justify="center"
+          overflow="scroll"
+          bg="gray.400"
+          borderWidth="1px"
+          rounded="lg"
         >
           <Favorites />
-        </Flex>
+        </Box>
       </Grid>
     </>
   );

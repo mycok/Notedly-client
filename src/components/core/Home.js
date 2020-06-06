@@ -11,12 +11,19 @@ const Home = () => {
 
   if (loading) return <NotesLoader />;
 
-  if (error) return <p style={{ textAlign: 'center' }}>....Error......</p>;
+  if (error) {
+    if (error.networkError) {
+      return <p>{`....error...${error.message}`}</p>;
+    }
+    return error.graphQLErrors.map(({ message }) => (
+      <p key={message.charAt(2)}>{`....error...${message}`}</p>
+    ));
+  }
 
   return data.noteFeed.notes.length > 0 ? (
     <NoteFeed notes={data.noteFeed.notes} />
   ) : (
-    <NotFound />
+    <NotFound size="1000px" />
   );
 };
 

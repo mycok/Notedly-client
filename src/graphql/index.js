@@ -32,7 +32,7 @@ export const client = new ApolloClient({
         graphQLErrors.map(({ extensions }) => {
           if (extensions.code === 'UNAUTHENTICATED') {
             localStorage.removeItem('jwt');
-            client.clearStore();
+            // client.resetStore();
           }
         });
       }

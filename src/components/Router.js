@@ -4,9 +4,11 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import MyNotes from './Note/MyNotes';
 import Layout from './layout';
 import Note from './Note/Note';
+// import Header from './core/Header';
 
 const AppRouter = () => (
   <>
+    {/* <Header /> */}
     <Router>
       <Layout>
         <Switch>
