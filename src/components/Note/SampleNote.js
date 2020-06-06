@@ -5,7 +5,7 @@ import { format } from 'date-fns';
 import { Avatar, Box, Text } from '@chakra-ui/core';
 import { Link } from 'react-router-dom';
 
-const Note = ({ note }) => {
+const SampleNote = ({ note }) => {
   const {
     id,
     author: { avatar, username },
@@ -19,11 +19,12 @@ const Note = ({ note }) => {
         borderWidth="1px"
         rounded="lg"
         overflow="hidden"
-        mt={5}
-        mb={5}
-        padding={5}
+        mt={3}
+        mb={3}
+        padding={3}
         borderColor="grey.200"
         boxShadow="lg"
+        color="#fff"
         onClick={() => null}
       >
         <Box
@@ -43,15 +44,15 @@ const Note = ({ note }) => {
           </Text>
         </Box>
         <Box mt={5}>
-          <ReactMarkdown source={content.substring(0, 120)} />
+          <ReactMarkdown source={content.substring(0, 180)} />
         </Box>
       </Box>
     </Link>
   );
 };
 
-Note.propTypes = {
+SampleNote.propTypes = {
   note: instanceOf(Object).isRequired,
 };
 
-export default Note;
+export default SampleNote;

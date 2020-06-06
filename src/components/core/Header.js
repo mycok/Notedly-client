@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-// import { instanceOf } from 'prop-types';
 import {
   Image,
   Flex,
@@ -20,16 +19,11 @@ import logo from 'url:../../images/logo.png';
 
 const MenuItems = () => (
   <Menu>
-    <MenuButton
-      as="div"
-      // rightIcon="chevron-down"
-      color="gray.700"
-      size="sm"
-    >
+    <MenuButton as="div" color="gray.700" size="sm">
       <Avatar size="sm" name="Michael Kibuuka" />
       <Icon name="chevron-down" />
     </MenuButton>
-    <MenuList bg="#fff" color="#000" width={['100%', '50%', '25%', '15%']}>
+    <MenuList bg="gray.800" width={['100%', '50%', '25%', '15%']}>
       <MenuGroup>
         <MenuItem>
           <Link to="/my-notes">My Notes</Link>
@@ -46,16 +40,17 @@ const MenuItems = () => (
 const Header = (props) => (
   <Flex
     as="nav"
-    flex="1"
-    direction="row"
+    flex={1}
     align="center"
     justify="space-between"
     padding="0.8rem"
-    bg="gray.700"
-    color="white"
+    color="#fff"
+    bg="gray.800"
+    zIndex={1}
     top={0}
     pos="sticky"
     h={{ sm: '10vh', md: '6vh' }}
+    w="100vw"
     {...props}
   >
     <Flex align="center" mr={5} justify="flex-start">
@@ -78,8 +73,4 @@ const Header = (props) => (
   </Flex>
 );
 
-// MenuItems.propTypes = {
-//   children: instanceOf(Array).isRequired,
-// };
-
-export default Header;
+export default React.memo(Header);

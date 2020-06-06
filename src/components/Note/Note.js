@@ -28,19 +28,12 @@ const Note = () => {
     <Box
       borderWidth="1px"
       rounded="lg"
-      overflow="hidden"
-      mt={5}
-      mb={5}
+      overflow="scroll"
       padding={5}
       borderColor="grey.200"
       boxShadow="lg"
     >
-      <Box
-        d="flex"
-        justifyContent="space-between"
-        dir="row"
-        alignItems="center"
-      >
+      <Box d="flex" justifyContent="space-between" alignItems="center">
         <Box d="flex" alignItems="center">
           <Avatar
             size="sm"
@@ -55,7 +48,7 @@ const Note = () => {
           {format(new Date(data.note.createdAt), 'MMM dd yyyy')}
         </Text>
       </Box>
-      <Box mt={5}>
+      <Box m={2} p={2}>
         <ReactMarkdown source={data.note.content} />
       </Box>
     </Box>
