@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
-export const NoteByIdQuery = gql`
-  query Note($id: ID!) {
+export const noteByIdQuery = gql`
+  query note($id: ID!) {
     note(id: $id) {
       id
       content

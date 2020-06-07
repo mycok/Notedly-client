@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-export const UsersQuery = gql`
+export const usersQuery = gql`
   query users {
     users {
       id
@@ -8,7 +8,10 @@ export const UsersQuery = gql`
       email
       avatar
       notes {
+        id
         content
+        favoriteCount
+        createdAt
       }
     }
   }

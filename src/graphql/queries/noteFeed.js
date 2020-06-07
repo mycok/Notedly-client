@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
-export const NoteFeedQuery = gql`
-  query NoteFeed($cursor: String) {
+export const noteFeedQuery = gql`
+  query noteFeed($cursor: String) {
     noteFeed(cursor: $cursor) {
       notes {
         id

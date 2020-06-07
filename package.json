@@ -2,10 +2,15 @@
   "name": "notedly-client",
   "version": "1.0.0",
   "description": "social note client application",
-  "main": "index.html",
+  "main": "dist/index.html",
+  "source": [
+    "src/index.js",
+    "src/index.html"
+  ],
   "scripts": {
     "test": "jest",
-    "dev": "parcel src/index.html"
+    "start": "rimraf dist && parcel src/index.html --no-autoinstall",
+    "build": "rimraf dist && parcel build src/index.html --no-source-maps"
   },
   "repository": {
     "type": "git",
@@ -39,7 +44,8 @@
     "husky": "^4.2.5",
     "lint-staged": ">=10",
     "parcel": "^2.0.0-alpha.3.2",
-    "prettier": "2.0.5"
+    "prettier": "2.0.5",
+    "rimraf": "^3.0.2"
   },
   "husky": {
     "hooks": {

@@ -1,14 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import MyNotes from './Note/MyNotes';
 import Layout from './layout';
 import Note from './Note/Note';
-// import Header from './core/Header';
+import MyNotes from './Note/MyNotes';
 
 const AppRouter = () => (
   <>
-    {/* <Header /> */}
     <Router>
       <Layout>
         <Switch>

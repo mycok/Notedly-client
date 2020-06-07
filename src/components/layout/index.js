@@ -7,10 +7,12 @@ import Favorites from '../Note/Favorites';
 import Home from '../core/Home';
 import MyNotes from '../Note/MyNotes';
 import Note from '../Note/Note';
+
 import Header from '../core/Header';
 
 const Layout = () => {
-  const { pathname } = useLocation();
+  const location = useLocation();
+  const { pathname } = location;
   const noteId = pathname.split('/')[2];
 
   React.useEffect(() => {
@@ -23,7 +25,7 @@ const Layout = () => {
   const renderRoute = () => {
     switch (pathname) {
       case '/my-notes':
-        return <MyNotes />;
+        return <MyNotes authorId={location.state.author.id} />;
       case `/note/${noteId}`:
         return <Note />;
       default:
@@ -44,7 +46,6 @@ const Layout = () => {
           align="center"
           justify="center"
           overflow="scroll"
-          bg="#03273f"
           padding={2}
           borderWidth="1px"
           rounded="lg"

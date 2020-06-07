@@ -1,13 +1,15 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
 
-import { NoteFeedQuery } from '../../graphql/queries/noteFeed';
+import { noteFeedQuery } from '../../graphql/queries/noteFeed';
 import NoteFeed from '../Note/NoteFeed';
 import { NotesLoader } from './Loader';
 import NotFound from './NotFound';
 
 const Home = () => {
-  const { loading, error, data } = useQuery(NoteFeedQuery);
+  const { loading, error, data } = useQuery(noteFeedQuery, {
+    errorPolicy: 'all',
+  });
 
   if (loading) return <NotesLoader />;
 
