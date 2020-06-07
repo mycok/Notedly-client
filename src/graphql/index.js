@@ -6,7 +6,9 @@ import {
 } from '@apollo/client';
 import { onError } from 'apollo-link-error';
 
-const uri = process.env.API_URL;
+const uri = process.env.NODE_ENV === 'production'
+  ? process.env.API_PROD_URL
+  : process.env.API_DEV_URL;
 const cache = new InMemoryCache();
 const httpLink = createHttpLink({ uri });
 

@@ -18,7 +18,7 @@ const Layout = () => {
   React.useEffect(() => {
     localStorage.setItem(
       'jwt',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWNlZjExMTMwOTljZTE5NjBhMDA2MTIiLCJpYXQiOjE1OTE0MzgyMzIsImV4cCI6MTU5MTUyNDYzMn0.OQIuJx9tlY2tvcTOPgshuIIYoC55RGVZEpyNBddabHY',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWNlZjExMTMwOTljZTE5NjBhMDA2MTIiLCJpYXQiOjE1OTE1Mjg2NDIsImV4cCI6MTU5MTYxNTA0Mn0.9TH2RPeURV0jjLTiOokUwtcwmtHro1PBnwCZ6YsMqhs',
     );
   }, []);
 
