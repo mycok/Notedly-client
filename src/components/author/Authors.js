@@ -3,11 +3,13 @@ import { useQuery } from '@apollo/client';
 
 import Author from './Author';
 import { NotesLoader } from '../core/Loader';
-import { UsersQuery } from '../../graphql/queries/users';
+import { usersQuery } from '../../graphql/queries/users';
 
 const Authors = () => {
-  const { loading, error, data } = useQuery(UsersQuery, { errorPolicy: 'all' });
+  const { loading, error, data } = useQuery(usersQuery, { errorPolicy: 'all' });
+
   if (loading) return <NotesLoader />;
+
   if (error) {
     if (error.networkError) {
       return <p>{`....error...${error.message}`}</p>;

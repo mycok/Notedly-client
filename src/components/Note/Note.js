@@ -5,13 +5,13 @@ import { format } from 'date-fns';
 import { Avatar, Box, Text } from '@chakra-ui/core';
 import { useQuery } from '@apollo/client';
 
-import { NoteByIdQuery } from '../../graphql/queries/note';
+import { noteByIdQuery } from '../../graphql/queries/note';
 import { NotesLoader } from '../core/Loader';
 
 const Note = () => {
   const { pathname } = useLocation();
   const noteId = pathname.split('/')[2];
-  const { loading, error, data } = useQuery(NoteByIdQuery, {
+  const { loading, error, data } = useQuery(noteByIdQuery, {
     variables: { id: noteId },
   });
 
