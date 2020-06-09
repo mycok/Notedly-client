@@ -35,6 +35,8 @@ const Note = () => {
       boxShadow="lg"
       width="1000px"
       margin="auto"
+      mt={3}
+      mb={3}
     >
       <Box d="flex" justifyContent="space-between" alignItems="center">
         <Box d="flex" alignItems="center">

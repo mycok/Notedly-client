@@ -4,7 +4,6 @@ import { Grid, Box } from '@chakra-ui/core';
 import Authors from '../author/Authors';
 import Favorites from '../Note/Favorites';
 import Notes from '../Note/Notes';
-import Header from './Header';
 
 const Home = () => {
   React.useEffect(() => {
@@ -14,20 +13,8 @@ const Home = () => {
     );
   }, []);
 
-  // const renderRoute = () => {
-  //   switch (pathname) {
-  //     case '/my-notes':
-  //       return <MyNotes authorId={location.state.author.id} />;
-  //     case `/note/${noteId}`:
-  //       return <Note />;
-  //     default:
-  //       return <Notes />;
-  //   }
-  // };
-
   return (
     <>
-      <Header />
       <Grid
         templateColumns="repeat(3, 1fr)"
         gap={2}
