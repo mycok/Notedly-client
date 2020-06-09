@@ -5,13 +5,14 @@ import {
   Flex,
   Menu,
   Icon,
+  IconButton,
   Button,
+  Stack,
   ButtonGroup,
   MenuButton,
   MenuList,
   MenuItem,
   MenuGroup,
-  MenuDivider,
   Avatar,
 } from '@chakra-ui/core';
 
@@ -23,13 +24,11 @@ const MenuItems = () => (
       <Avatar size="sm" name="Michael Kibuuka" />
       <Icon name="chevron-down" />
     </MenuButton>
-    <MenuList bg="gray.800" width={['100%', '50%', '25%', '15%']}>
-      <MenuGroup>
-        <MenuItem>
-          <Link to="/my-notes">My Notes</Link>
-        </MenuItem>
-      </MenuGroup>
-      <MenuDivider borderColor="#000" />
+    <MenuList
+      bg="#222121"
+      width={['100%', '50%', '25%', '15%']}
+      borderColor="#1a1a1a"
+    >
       <MenuGroup>
         <MenuItem onClick={() => null}>SignOut</MenuItem>
       </MenuGroup>
@@ -45,7 +44,7 @@ const Header = (props) => (
     justify="space-between"
     padding="0.8rem"
     color="#fff"
-    bg="gray.800"
+    bg="#222121"
     zIndex={1}
     top={0}
     pos="sticky"
@@ -57,12 +56,33 @@ const Header = (props) => (
       <Image src={logo} alt="Notedly" />
     </Flex>
 
-    <Flex />
+    <Flex>
+      <Stack isInline spacing={8}>
+        <IconButton
+          aria-label="favorites"
+          icon="favorites"
+          color="white.800"
+          size="sm"
+          isRound
+          variant="outline"
+          borderColor="teal.800"
+        />
+        <IconButton
+          aria-label="favorites"
+          icon="notes"
+          color="white.800"
+          size="sm"
+          isRound
+          variant="outline"
+          borderColor="teal.800"
+        />
+      </Stack>
+    </Flex>
 
     <Flex width={{ sm: 'full', md: 'auto' }} mr={5} justify="flex-end">
       <ButtonGroup mr={8} spacing={4}>
         <Button variantColor="teal" variant="outline" size="sm">
-          SignUp
+          <Link to="/auth/signup">SignUp</Link>
         </Button>
         <Button variantColor="teal" variant="outline" size="sm">
           Login

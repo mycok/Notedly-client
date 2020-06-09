@@ -22,8 +22,9 @@ const SampleNote = ({ note }) => {
         mt={3}
         mb={3}
         padding={3}
-        borderColor="grey.200"
+        borderColor="#1a1a1a"
         boxShadow="lg"
+        bg="#222121"
         color="#fff"
         onClick={() => null}
       >

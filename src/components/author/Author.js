@@ -6,13 +6,15 @@ import { Box, Avatar, Text } from '@chakra-ui/core';
 // - fix the name length to avoid truncating
 const Author = ({ author }) => {
   const {
-    username, email, avatar, notes,
+    id, username, email, avatar, notes,
   } = author;
 
   return (
-    <Link to={{ pathname: '/my-notes', state: { author } }}>
+    <Link to={{ pathname: '/author-notes', state: { authorId: id } }}>
       <Box
         borderWidth="1px"
+        bg="#222121"
+        borderColor="#1a1a1a"
         rounded="lg"
         overflow="hidden"
         mt={3}

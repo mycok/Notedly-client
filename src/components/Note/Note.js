@@ -27,11 +27,14 @@ const Note = () => {
   return (
     <Box
       borderWidth="1px"
+      bg="#222121"
       rounded="lg"
       overflow="scroll"
       padding={5}
-      borderColor="grey.200"
+      borderColor="#1a1a1a"
       boxShadow="lg"
+      width="1000px"
+      margin="auto"
     >
       <Box d="flex" justifyContent="space-between" alignItems="center">
         <Box d="flex" alignItems="center">
