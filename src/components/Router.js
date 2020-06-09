@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
+import Header from './core/Header';
 import Home from './core/Home';
 import Note from './Note/Note';
 import AuthorNotes from './Note/AuthorNotes';
@@ -10,6 +11,7 @@ import Signup from './auth/Signup';
 const AppRouter = () => (
   <>
     <Router>
+      <Header />
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/author-notes" component={AuthorNotes} />

@@ -39,7 +39,6 @@ const MenuItems = () => (
 const Header = (props) => (
   <Flex
     as="nav"
-    flex={1}
     align="center"
     justify="space-between"
     padding="0.8rem"
