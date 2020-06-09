@@ -1,31 +1,62 @@
 import React from 'react';
-import { useQuery } from '@apollo/client';
+import { Grid, Box } from '@chakra-ui/core';
 
-import { noteFeedQuery } from '../../graphql/queries/noteFeed';
-import NoteFeed from '../Note/NoteFeed';
-import { NotesLoader } from './Loader';
-import NotFound from './NotFound';
+import Authors from '../author/Authors';
+import Favorites from '../Note/Favorites';
+import Notes from '../Note/Notes';
+import Header from './Header';
 
 const Home = () => {
-  const { loading, error, data } = useQuery(noteFeedQuery, {
-    errorPolicy: 'all',
-  });
+  React.useEffect(() => {
+    localStorage.setItem(
+      'jwt',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWNlZjExMTMwOTljZTE5NjBhMDA2MTIiLCJpYXQiOjE1OTE2ODg4NDksImV4cCI6MTU5MTc3NTI0OX0.ZaeyhlXIFkvTGIXJy-bgWHybEjjvUUETdtO_zvSt6Us',
+    );
+  }, []);
 
-  if (loading) return <NotesLoader />;
+  // const renderRoute = () => {
+  //   switch (pathname) {
+  //     case '/my-notes':
+  //       return <MyNotes authorId={location.state.author.id} />;
+  //     case `/note/${noteId}`:
+  //       return <Note />;
+  //     default:
+  //       return <Notes />;
+  //   }
+  // };
 
-  if (error) {
-    if (error.networkError) {
-      return <p>{`....error...${error.message}`}</p>;
-    }
-    return error.graphQLErrors.map(({ message }) => (
-      <p key={message.charAt(2)}>{`....error...${message}`}</p>
-    ));
-  }
-
-  return data.noteFeed.notes.length > 0 ? (
-    <NoteFeed notes={data.noteFeed.notes} />
-  ) : (
-    <NotFound size="1000px" />
+  return (
+    <>
+      <Header />
+      <Grid
+        templateColumns="repeat(3, 1fr)"
+        gap={2}
+        height={{ sm: '90vh', md: '94vh' }}
+      >
+        <Box
+          d="flex"
+          align="center"
+          justify="center"
+          overflow="scroll"
+          padding={2}
+        >
+          <Authors />
+        </Box>
+        <Box
+          d="flex"
+          align="center"
+          justify="center"
+          overflow="scroll"
+          width="1000px"
+          padding={2}
+        >
+          <Notes />
+        </Box>
+        <Box d="flex" align="center" justify="center" overflow="scroll">
+          <Favorites />
+        </Box>
+      </Grid>
+    </>
   );
 };
 

@@ -6,7 +6,7 @@ const UserLoader = (props) => (
     viewBox="0 0 400 160"
     height="100%"
     width="100%"
-    speed={2}
+    speed={1}
     {...props}
   >
     <rect x="110" y="21" rx="4" ry="4" width="254" height="6" />
@@ -20,29 +20,32 @@ const UserLoader = (props) => (
 
 const NotesLoader = (props) => (
   <ContentLoader
-    viewBox="0 0 500 475"
+    viewBox="0 0 1000 900"
     height="100%"
     width="100%"
-    speed={2}
+    gradientRatio={0.1}
+    backgroundColor="#222121"
+    foregroundColor="#999"
+    speed={1}
     {...props}
   >
-    <circle cx="70.2" cy="73.2" r="41.3" />
-    <rect x="129.9" y="29.5" width="125.5" height="17" />
-    <rect x="129.9" y="64.7" width="296" height="17" />
-    <rect x="129.9" y="97.8" width="253.5" height="17" />
-    <rect x="129.9" y="132.3" width="212.5" height="17" />
+    <circle cx="20.2" cy="30.2" r="12.3" />
+    <rect x="800.9" y="29.5" width="200.5" height="8" />
+    <rect x="0" y="64.7" width="100%" height="17" />
+    <rect x="0" y="97.8" width="100%" height="17" />
+    <rect x="0" y="132.3" width="100%" height="17" />
 
-    <circle cx="70.7" cy="243.5" r="41.3" />
-    <rect x="130.4" y="199.9" width="125.5" height="17" />
-    <rect x="130.4" y="235" width="296" height="17" />
-    <rect x="130.4" y="268.2" width="253.5" height="17" />
-    <rect x="130.4" y="302.6" width="212.5" height="17" />
+    <circle cx="20.2" cy="200.2" r="12.3" />
+    <rect x="800.9" y="199.5" width="200.5" height="8" />
+    <rect x="0" y="235.7" width="100%" height="17" />
+    <rect x="0" y="268.8" width="100%" height="17" />
+    <rect x="0" y="302.3" width="100%" height="17" />
 
-    <circle cx="70.7" cy="412.7" r="41.3" />
-    <rect x="130.4" y="369" width="125.5" height="17" />
-    <rect x="130.4" y="404.2" width="296" height="17" />
-    <rect x="130.4" y="437.3" width="253.5" height="17" />
-    <rect x="130.4" y="471.8" width="212.5" height="17" />
+    <circle cx="20.2" cy="400.2" r="12.3" />
+    <rect x="800.9" y="400.5" width="200.5" height="8" />
+    <rect x="0" y="435.7" width="100%" height="17" />
+    <rect x="0" y="468.8" width="100%" height="17" />
+    <rect x="0" y="502.3" width="100%" height="17" />
   </ContentLoader>
 );
 
