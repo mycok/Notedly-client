@@ -1,27 +1,30 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { instanceOf } from 'prop-types';
 import ReactMarkdown from 'react-markdown';
 import { format } from 'date-fns';
 import { Avatar, Box, Text } from '@chakra-ui/core';
 import { useQuery } from '@apollo/client';
 
 import { noteByIdQuery } from '../../graphql/queries/note';
-import { NotesLoader } from '../core/Loader';
+import { NotesLoader } from '../shared/Loader';
 
-const Note = () => {
-  const { pathname } = useLocation();
-  const noteId = pathname.split('/')[2];
+const Note = ({ match }) => {
   const { loading, error, data } = useQuery(noteByIdQuery, {
-    variables: { id: noteId },
+    variables: { id: match.params.noteId },
   });
 
-  if (loading) return <NotesLoader />;
   if (error) {
-    return (
-      <p style={{ textAlign: 'center' }}>
-        ...please provide a valid token or login.....
+    if (error.networkError) {
+      return <p>{`....error...${error.message}`}</p>;
+    }
+    return error.graphQLErrors.map(({ message }) => (
+      <p
+        key={message.charAt(2)}
+        style={{ textAlign: 'center' }}
+      >
+        {`....error...${message}`}
       </p>
-    );
+    ));
   }
 
   return (
@@ -38,26 +41,36 @@ const Note = () => {
       mt={3}
       mb={3}
     >
-      <Box d="flex" justifyContent="space-between" alignItems="center">
-        <Box d="flex" alignItems="center">
-          <Avatar
-            size="sm"
-            name={data.note.author.username}
-            src={data.note.author.avatar}
-          />
-          <Text ml={2} color="grey" fontSize="sm">
-            {data.note.author.username}
-          </Text>
-        </Box>
-        <Text color="grey" fontSize="sm">
-          {format(new Date(data.note.createdAt), 'MMM dd yyyy')}
-        </Text>
-      </Box>
-      <Box m={2} p={2}>
-        <ReactMarkdown source={data.note.content} />
-      </Box>
+      {loading ? (
+        <NotesLoader />
+      ) : (
+        <>
+          <Box d="flex" justifyContent="space-between" alignItems="center">
+            <Box d="flex" alignItems="center">
+              <Avatar
+                size="sm"
+                name={data.note.author.username}
+                src={data.note.author.avatar}
+              />
+              <Text ml={2} color="grey" fontSize="sm">
+                {data.note.author.username}
+              </Text>
+            </Box>
+            <Text color="grey" fontSize="sm">
+              {format(new Date(data.note.createdAt), 'MMM dd yyyy')}
+            </Text>
+          </Box>
+          <Box m={2} p={2}>
+            <ReactMarkdown source={data.note.content} />
+          </Box>
+        </>
+      )}
     </Box>
   );
+};
+
+Note.propTypes = {
+  match: instanceOf(Object).isRequired,
 };
 
 export default Note;

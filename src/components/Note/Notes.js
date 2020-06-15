@@ -3,15 +3,15 @@ import { useQuery } from '@apollo/client';
 
 import { noteFeedQuery } from '../../graphql/queries/noteFeed';
 import NoteFeed from './NoteFeed';
-import { NotesLoader } from '../core/Loader';
-import NotFound from '../core/NotFound';
+import { NotesLoader } from '../shared/Loader';
+import NotFound from '../shared/NotFound';
 
 const Notes = () => {
   const { loading, error, data } = useQuery(noteFeedQuery, {
     errorPolicy: 'all',
   });
 
-  if (loading) return <NotesLoader />;
+  if (loading) return <NotesLoader backgroundColor="#222121" />;
 
   if (error) {
     if (error.networkError) {

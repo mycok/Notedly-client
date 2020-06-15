@@ -14,7 +14,7 @@ const SampleNote = ({ note }) => {
   } = note;
 
   return (
-    <Link to={`/note/${id}`}>
+    <Link to={`/notes/${id}`}>
       <Box
         borderWidth="1px"
         rounded="lg"

@@ -1,42 +1,21 @@
 import React from 'react';
+import { func } from 'prop-types';
 import { Link } from 'react-router-dom';
 import {
   Image,
   Flex,
-  Menu,
-  Icon,
   IconButton,
   Button,
   Stack,
   ButtonGroup,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuGroup,
-  Avatar,
 } from '@chakra-ui/core';
 
 import logo from 'url:../../images/logo.png';
+import MenuItems from './MenuItems';
 
-const MenuItems = () => (
-  <Menu>
-    <MenuButton as="div" color="gray.700" size="sm">
-      <Avatar size="sm" name="Michael Kibuuka" />
-      <Icon name="chevron-down" />
-    </MenuButton>
-    <MenuList
-      bg="#222121"
-      width={['100%', '50%', '25%', '15%']}
-      borderColor="#1a1a1a"
-    >
-      <MenuGroup>
-        <MenuItem onClick={() => null}>SignOut</MenuItem>
-      </MenuGroup>
-    </MenuList>
-  </Menu>
-);
-
-const Header = (props) => (
+// TODO
+// - implement back to home navigation by clicking on the logo
+const Header = ({ toogleNavBarVisibility }, props) => (
   <Flex
     as="nav"
     align="center"
@@ -52,7 +31,11 @@ const Header = (props) => (
     {...props}
   >
     <Flex align="center" mr={5} justify="flex-start">
-      <Image src={logo} alt="Notedly" />
+      <Image
+        src={logo}
+        alt="Notedly"
+        onClick={() => toogleNavBarVisibility(true)}
+      />
     </Flex>
 
     <Flex>
@@ -80,10 +63,20 @@ const Header = (props) => (
 
     <Flex width={{ sm: 'full', md: 'auto' }} mr={5} justify="flex-end">
       <ButtonGroup mr={8} spacing={4}>
-        <Button variantColor="teal" variant="outline" size="sm">
+        <Button
+          variantColor="teal"
+          variant="outline"
+          size="sm"
+          onClick={() => toogleNavBarVisibility(false)}
+        >
           <Link to="/auth/signup">SignUp</Link>
         </Button>
-        <Button variantColor="teal" variant="outline" size="sm">
+        <Button
+          variantColor="teal"
+          variant="outline"
+          size="sm"
+          onClick={() => toogleNavBarVisibility(false)}
+        >
           Login
         </Button>
       </ButtonGroup>
@@ -92,4 +85,8 @@ const Header = (props) => (
   </Flex>
 );
 
-export default React.memo(Header);
+Header.propTypes = {
+  toogleNavBarVisibility: func.isRequired,
+};
+
+export default Header;

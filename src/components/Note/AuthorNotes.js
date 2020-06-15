@@ -1,20 +1,18 @@
 import React from 'react';
-import { string, instanceOf } from 'prop-types';
+import { instanceOf } from 'prop-types';
 import { useQuery } from '@apollo/client';
 import { Box } from '@chakra-ui/core';
 
-import { NotesLoader } from '../core/Loader';
+import { NotesLoader } from '../shared/Loader';
 import NoteFeed from './NoteFeed';
-import NotFound from '../core/NotFound';
+import NotFound from '../shared/NotFound';
 import { notesByAuthorQuery } from '../../graphql/queries/noteByAuthor';
 
-const AuthorNotes = ({ location }) => {
+const AuthorNotes = ({ match }) => {
   const { loading, error, data } = useQuery(notesByAuthorQuery, {
     errorPolicy: 'all',
-    variables: { id: location.state.authorId },
+    variables: { id: match.params.authorId },
   });
-
-  if (loading) return <NotesLoader />;
 
   if (error) {
     if (error.networkError) {
@@ -36,9 +34,11 @@ const AuthorNotes = ({ location }) => {
       alignSelf="center"
       margin="auto"
     >
-      {data.notesByAuthor.length > 0 ? (
+      {loading && <NotesLoader backgroundColor="#222121" />}
+      {!loading && data.notesByAuthor.length > 0 && (
         <NoteFeed notes={data.notesByAuthor} />
-      ) : (
+      )}
+      {!loading && data.notesByAuthor.length === 0 && (
         <NotFound size="1000px" />
       )}
     </Box>
@@ -46,8 +46,7 @@ const AuthorNotes = ({ location }) => {
 };
 
 AuthorNotes.propTypes = {
-  authorId: string.isRequired,
-  location: instanceOf(Object).isRequired,
+  match: instanceOf(Object).isRequired,
 };
 
 export default AuthorNotes;
