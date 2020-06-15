@@ -31,11 +31,9 @@ const Header = ({ toogleNavBarVisibility }, props) => (
     {...props}
   >
     <Flex align="center" mr={5} justify="flex-start">
-      <Image
-        src={logo}
-        alt="Notedly"
-        onClick={() => toogleNavBarVisibility(true)}
-      />
+      <Link to="/">
+        <Image src={logo} alt="Notedly" />
+      </Link>
     </Flex>
 
     <Flex>
