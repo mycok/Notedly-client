@@ -10,7 +10,7 @@ const Author = ({ author }) => {
   } = author;
 
   return (
-    <Link to={{ pathname: '/author-notes', state: { authorId: id } }}>
+    <Link to={`/authors/${id}/notes`}>
       <Box
         borderWidth="1px"
         bg="#222121"

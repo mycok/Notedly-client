@@ -1,16 +1,21 @@
 import React from 'react';
+import { bool, func } from 'prop-types';
 import { Grid, Box } from '@chakra-ui/core';
 
 import Authors from '../author/Authors';
 import Favorites from '../Note/Favorites';
 import Notes from '../Note/Notes';
 
-const Home = () => {
+const Home = ({ isNavBarVisible, toogleNavBarVisibility }) => {
   React.useEffect(() => {
     localStorage.setItem(
       'jwt',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWNlZjExMTMwOTljZTE5NjBhMDA2MTIiLCJpYXQiOjE1OTE2ODg4NDksImV4cCI6MTU5MTc3NTI0OX0.ZaeyhlXIFkvTGIXJy-bgWHybEjjvUUETdtO_zvSt6Us',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWNlZjExMTMwOTljZTE5NjBhMDA2MTIiLCJpYXQiOjE1OTIyMjgxNDcsImV4cCI6MTU5MjMxNDU0N30.LQZBu0iWkqC0dy758aXDMtI7RoSDKTcToCutrd8ahZM',
     );
+
+    if (!isNavBarVisible) {
+      toogleNavBarVisibility(true);
+    }
   }, []);
 
   return (
@@ -45,6 +50,11 @@ const Home = () => {
       </Grid>
     </>
   );
+};
+
+Home.propTypes = {
+  isNavBarVisible: bool.isRequired,
+  toogleNavBarVisibility: func.isRequired,
 };
 
 export default Home;

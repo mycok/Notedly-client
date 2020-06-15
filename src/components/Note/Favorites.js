@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import NotFound from '../core/NotFound';
+import NotFound from '../shared/NotFound';
 
 const Favorites = () => {
   useEffect(() => {
