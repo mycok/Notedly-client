@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { instanceOf, bool, func } from 'prop-types';
+import { useMutation } from '@apollo/client';
 import { Box, Text, Icon } from '@chakra-ui/core';
 
 import { Link } from 'react-router-dom';
 import SubmitButton from './SubmitButton';
 import Signup from './Signup';
 import { authValidation } from '../../utils/validation';
+import { signUpMutation } from '../../graphql/mutations/signup';
 
-const Auth = ({ match, isNavBarVisible, toogleNavBarVisibility }) => {
+const Auth = ({
+  match, history, isNavBarVisible, toogleNavBarVisibility,
+}) => {
   const { path } = match;
   const [authState, setAuthState] = useState({
     username: '',
@@ -16,10 +20,13 @@ const Auth = ({ match, isNavBarVisible, toogleNavBarVisibility }) => {
   });
 
   const [isPasswordVisible, setPasswordVisibility] = useState(false);
-  const [isLoading] = useState(false);
   const [areValuesProvided, setValuesProvided] = useState(false);
-  //   const [serverErrors, setServerErrors] = useState([]);
   const [inputErrors, setInputErrors] = useState({});
+
+  const [signUp, { loading }] = useMutation(signUpMutation, {
+    ignoreResults: true,
+    onCompleted: () => history.push('/auth/login'),
+  });
 
   const handleOnChange = (event) => {
     const {
@@ -40,15 +47,22 @@ const Auth = ({ match, isNavBarVisible, toogleNavBarVisibility }) => {
       || validationErrors.password
     ) {
       setInputErrors(validationErrors);
+    } else {
+      signUp({ variables: { ...authState } });
     }
   };
 
   useEffect(() => {
     const { username, email, password } = authState;
+
     if (username && email && password) {
       setValuesProvided(true);
     } else {
       setValuesProvided(false);
+    }
+
+    if (Object.values(inputErrors).length > 0) {
+      setInputErrors({});
     }
   }, [authState]);
 
@@ -98,7 +112,7 @@ const Auth = ({ match, isNavBarVisible, toogleNavBarVisibility }) => {
           path === '/auth/signup' ? '...signing up...' : '...loging in...'
         }
         title={path === '/auth/signup' ? 'SignUp' : 'Login'}
-        isLoading={isLoading}
+        isLoading={loading}
         areValuesProvided={areValuesProvided}
         handleSubmit={handleSubmit}
       />
@@ -135,6 +149,7 @@ const Auth = ({ match, isNavBarVisible, toogleNavBarVisibility }) => {
 
 Auth.propTypes = {
   match: instanceOf(Object).isRequired,
+  history: instanceOf(Object).isRequired,
   isNavBarVisible: bool.isRequired,
   toogleNavBarVisibility: func.isRequired,
 };

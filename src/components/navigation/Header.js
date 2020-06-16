@@ -2,19 +2,12 @@ import React from 'react';
 import { func } from 'prop-types';
 import { Link } from 'react-router-dom';
 import {
-  Image,
-  Flex,
-  IconButton,
-  Button,
-  Stack,
-  ButtonGroup,
+  Image, Flex, IconButton, Button, Stack,
 } from '@chakra-ui/core';
 
 import logo from 'url:../../images/logo.png';
 import MenuItems from './MenuItems';
 
-// TODO
-// - implement back to home navigation by clicking on the logo
 const Header = ({ toogleNavBarVisibility }, props) => (
   <Flex
     as="nav"
@@ -60,29 +53,29 @@ const Header = ({ toogleNavBarVisibility }, props) => (
     </Flex>
 
     <Flex width={{ sm: 'full', md: 'auto' }} mr={5} justify="flex-end">
-      <ButtonGroup m={8} spacing={4}>
-        <Link to="/auth/signup">
+      <>
+        <Link to="/auth/signup" style={{ marginRight: '1em' }}>
           <Button
             variantColor="teal"
-            variant="ghost"
+            variant="outline"
             size="md"
             onClick={() => toogleNavBarVisibility(false)}
           >
-            Signup
+            SignUp
           </Button>
         </Link>
-        <Link to="/auth/login">
+        <Link to="/auth/login" style={{ marginRight: '1em' }}>
           <Button
             variantColor="teal"
-            variant="ghost"
+            variant="outline"
             size="md"
             onClick={() => toogleNavBarVisibility(false)}
           >
             Login
           </Button>
         </Link>
-      </ButtonGroup>
-      <MenuItems />
+        <MenuItems />
+      </>
     </Flex>
   </Flex>
 );
