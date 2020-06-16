@@ -6,7 +6,7 @@ import Home from './core/Home';
 import Note from './Note/Note';
 import AuthorNotes from './Note/AuthorNotes';
 import Favorites from './Note/Favorites';
-import Signup from './auth/Signup';
+import Auth from './auth';
 
 const AppRouter = () => {
   const [isNavBarVisible, toogleNavBarVisibility] = useState(true);
@@ -26,10 +26,20 @@ const AppRouter = () => {
             />
           )}
         />
+        <Route
+          exact
+          path={['/auth/signup', '/auth/login']}
+          render={(routeProps) => (
+            <Auth
+              isNavBarVisible={isNavBarVisible}
+              toogleNavBarVisibility={toogleNavBarVisibility}
+              {...routeProps}
+            />
+          )}
+        />
         <Route exact path="/authors/:authorId/notes" component={AuthorNotes} />
         <Route exact path="/notes/:noteId" component={Note} />
         <Route exact path="/favorites" component={Favorites} />
-        <Route exact path="/auth/signup" component={Signup} />
       </Switch>
     </Router>
   );
