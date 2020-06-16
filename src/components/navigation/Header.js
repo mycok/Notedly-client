@@ -60,23 +60,27 @@ const Header = ({ toogleNavBarVisibility }, props) => (
     </Flex>
 
     <Flex width={{ sm: 'full', md: 'auto' }} mr={5} justify="flex-end">
-      <ButtonGroup mr={8} spacing={4}>
-        <Button
-          variantColor="teal"
-          variant="outline"
-          size="sm"
-          onClick={() => toogleNavBarVisibility(false)}
-        >
-          <Link to="/auth/signup">SignUp</Link>
-        </Button>
-        <Button
-          variantColor="teal"
-          variant="outline"
-          size="sm"
-          onClick={() => toogleNavBarVisibility(false)}
-        >
-          Login
-        </Button>
+      <ButtonGroup m={8} spacing={4}>
+        <Link to="/auth/signup">
+          <Button
+            variantColor="teal"
+            variant="ghost"
+            size="md"
+            onClick={() => toogleNavBarVisibility(false)}
+          >
+            Signup
+          </Button>
+        </Link>
+        <Link to="/auth/login">
+          <Button
+            variantColor="teal"
+            variant="ghost"
+            size="md"
+            onClick={() => toogleNavBarVisibility(false)}
+          >
+            Login
+          </Button>
+        </Link>
       </ButtonGroup>
       <MenuItems />
     </Flex>

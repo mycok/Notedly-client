@@ -28,6 +28,7 @@
         "react/jsx-props-no-spreading": "off",
         "prefer-destructuring": "off",
         "import/no-unresolved": "off",
-        "array-callback-return": "off"
+        "array-callback-return": "off",
+        "no-useless-escape": "off"
     }
 }
