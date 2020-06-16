@@ -27,7 +27,6 @@ const AppRouter = () => {
           )}
         />
         <Route
-          exact
           path={['/auth/signup', '/auth/login']}
           render={(routeProps) => (
             <Auth
