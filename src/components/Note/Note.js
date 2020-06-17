@@ -13,7 +13,7 @@ const Note = ({ match }) => {
     variables: { id: match.params.noteId },
   });
   // TODO:
-  // - extract the error handling logic into a reusable function
+  // - render a serverError component
   if (error) {
     if (error.networkError) {
       return <p>{`....error...${error.message}`}</p>;
