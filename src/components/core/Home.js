@@ -8,11 +8,6 @@ import Notes from '../Note/Notes';
 
 const Home = ({ isNavBarVisible, toogleNavBarVisibility }) => {
   React.useEffect(() => {
-    localStorage.setItem(
-      'jwt',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWNlZjExMTMwOTljZTE5NjBhMDA2MTIiLCJpYXQiOjE1OTIzMTQ5OTAsImV4cCI6MTU5MjQwMTM5MH0.sHVcEERfn2YBnXmRGKQaTNIfVse0rBL37a2IrXEEGOI',
-    );
-
     if (!isNavBarVisible) {
       toogleNavBarVisibility(true);
     }

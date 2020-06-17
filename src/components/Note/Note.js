@@ -12,16 +12,14 @@ const Note = ({ match }) => {
   const { loading, error, data } = useQuery(noteByIdQuery, {
     variables: { id: match.params.noteId },
   });
-
+  // TODO:
+  // - extract the error handling logic into a reusable function
   if (error) {
     if (error.networkError) {
       return <p>{`....error...${error.message}`}</p>;
     }
     return error.graphQLErrors.map(({ message }) => (
-      <p
-        key={message.charAt(2)}
-        style={{ textAlign: 'center' }}
-      >
+      <p key={message.charAt(2)} style={{ textAlign: 'center' }}>
         {`....error...${message}`}
       </p>
     ));

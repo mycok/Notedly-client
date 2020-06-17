@@ -7,7 +7,7 @@ const SubmitButton = ({
   isLoading,
   loadingText,
   title,
-  handleSubmit,
+  handler,
 }) => (
   <Button
     isFullWidth
@@ -17,7 +17,7 @@ const SubmitButton = ({
     loadingText={loadingText}
     variant="solid"
     m="auto"
-    onClick={handleSubmit}
+    onClick={handler}
   >
     {title}
   </Button>
@@ -28,7 +28,7 @@ SubmitButton.propTypes = {
   isLoading: bool.isRequired,
   loadingText: string.isRequired,
   title: string.isRequired,
-  handleSubmit: func.isRequired,
+  handler: func.isRequired,
 };
 
 export default SubmitButton;
