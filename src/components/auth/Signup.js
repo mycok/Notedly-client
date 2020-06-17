@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { bool, func } from 'prop-types';
+import {
+  bool, func, instanceOf, any,
+} from 'prop-types';
 import {
   FormControl,
   FormHelperText,
@@ -9,12 +11,16 @@ import {
   InputRightElement,
   Icon,
   Stack,
+  Box,
 } from '@chakra-ui/core';
 
 import SubmitButton from './SubmitButton';
+import CustomAlert from '../shared/Alert';
 import { authValidation } from '../../utils/validation';
 
-const Signup = ({ loading, signUp }) => {
+const Signup = ({
+  loading, signUp, serverError, setServerError,
+}) => {
   const [signupState, setSignupState] = useState({
     username: '',
     email: '',
@@ -33,6 +39,10 @@ const Signup = ({ loading, signUp }) => {
       ...prevSignupState,
       [name]: value,
     }));
+
+    if (serverError) {
+      setServerError(null);
+    }
   };
 
   const handleSignUp = () => {
@@ -66,8 +76,17 @@ const Signup = ({ loading, signUp }) => {
     }
   }, [signupState]);
 
+  useEffect(() => {
+    setServerError(null);
+  }, []);
+
   return (
     <>
+      <Box mb={3}>
+        {serverError && (
+          <CustomAlert message={serverError.graphQLErrors[0].message} />
+        )}
+      </Box>
       <FormControl mb={5}>
         <Stack spacing={4}>
           <InputGroup>
@@ -164,6 +183,12 @@ const Signup = ({ loading, signUp }) => {
 Signup.propTypes = {
   loading: bool.isRequired,
   signUp: func.isRequired,
+  serverError: instanceOf(any),
+  setServerError: func.isRequired,
+};
+
+Signup.defaultProps = {
+  serverError: [],
 };
 
 export default Signup;

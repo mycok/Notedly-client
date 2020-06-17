@@ -13,7 +13,8 @@ const AuthorNotes = ({ match }) => {
     errorPolicy: 'all',
     variables: { id: match.params.authorId },
   });
-
+  // TODO:
+  // - render a serverError component
   if (error) {
     if (error.networkError) {
       return <p>{`....error...${error.message}`}</p>;

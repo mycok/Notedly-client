@@ -19,6 +19,7 @@ const Authors = () => {
   }
   // TODO
   // - check for empty author list and display a no users found component
+  // - render a serverError component
   return (
     <Box>
       {loading ? (

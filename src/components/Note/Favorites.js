@@ -7,8 +7,9 @@ const Favorites = () => {
     document.title = 'Favourites';
   });
   // TODO:
-  // - access the signedIn user and pass the favorites list to the NoteFeed component
+  // - use the me query and pass the favorites list to the NoteFeed component
   // - display the favorites as a list of notes or display a not found component
+  // - render a serverError component in case of an error while fetching the data
   return <NotFound size="320px" />;
 };
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { instanceOf, bool, func } from 'prop-types';
 import { useMutation } from '@apollo/client';
 import { Box, Text, Icon } from '@chakra-ui/core';
@@ -8,16 +8,19 @@ import Signup from './Signup';
 import Signin from './Signin';
 import { signUpMutation } from '../../graphql/mutations/signup';
 import { signInMutation } from '../../graphql/mutations/signin';
-// TODO:
-// - implement server error handling when signing up or logging in
+
 const Auth = ({
   match, history, isNavBarVisible, toogleNavBarVisibility,
 }) => {
   const { path } = match;
+  const [serverError, setServerError] = useState(null);
 
   const [signUp, { loading: signingUp }] = useMutation(signUpMutation, {
     ignoreResults: true,
     onCompleted: () => history.push('/auth/login'),
+    onError: (error) => {
+      setServerError(error);
+    },
   });
 
   const [signIn, { loading: signingIn }] = useMutation(signInMutation, {
@@ -25,13 +28,16 @@ const Auth = ({
       localStorage.setItem('user', JSON.stringify(data.signIn));
       history.push('/');
     },
+    onError: (error) => {
+      setServerError(error);
+    },
   });
 
   useEffect(() => {
     if (isNavBarVisible) {
       toogleNavBarVisibility(false);
     }
-  });
+  }, [isNavBarVisible]);
 
   return (
     <Box
@@ -56,9 +62,19 @@ const Auth = ({
         {path === '/auth/signup' ? 'SignUp' : 'Login'}
       </Text>
       {path === '/auth/signup' ? (
-        <Signup loading={signingUp} signUp={signUp} />
+        <Signup
+          loading={signingUp}
+          signUp={signUp}
+          serverError={serverError}
+          setServerError={setServerError}
+        />
       ) : (
-        <Signin loading={signingIn} signIn={signIn} />
+        <Signin
+          loading={signingIn}
+          signIn={signIn}
+          serverError={serverError}
+          setServerError={setServerError}
+        />
       )}
       <Box
         d="flex"
