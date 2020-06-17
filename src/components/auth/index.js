@@ -1,70 +1,31 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { instanceOf, bool, func } from 'prop-types';
 import { useMutation } from '@apollo/client';
 import { Box, Text, Icon } from '@chakra-ui/core';
 
 import { Link } from 'react-router-dom';
-import SubmitButton from './SubmitButton';
 import Signup from './Signup';
-import { authValidation } from '../../utils/validation';
+import Signin from './Signin';
 import { signUpMutation } from '../../graphql/mutations/signup';
-
+import { signInMutation } from '../../graphql/mutations/signin';
+// TODO:
+// - implement server error handling when signing up or logging in
 const Auth = ({
   match, history, isNavBarVisible, toogleNavBarVisibility,
 }) => {
   const { path } = match;
-  const [authState, setAuthState] = useState({
-    username: '',
-    email: '',
-    password: '',
-  });
 
-  const [isPasswordVisible, setPasswordVisibility] = useState(false);
-  const [areValuesProvided, setValuesProvided] = useState(false);
-  const [inputErrors, setInputErrors] = useState({});
-
-  const [signUp, { loading }] = useMutation(signUpMutation, {
+  const [signUp, { loading: signingUp }] = useMutation(signUpMutation, {
     ignoreResults: true,
     onCompleted: () => history.push('/auth/login'),
   });
 
-  const handleOnChange = (event) => {
-    const {
-      target: { name, value },
-    } = event;
-    setAuthState((prevAuthState) => ({ ...prevAuthState, [name]: value }));
-  };
-
-  const handleSubmit = () => {
-    const validationErrors = authValidation(
-      authState.username,
-      authState.email,
-      authState.password,
-    );
-    if (
-      validationErrors.username
-      || validationErrors.email
-      || validationErrors.password
-    ) {
-      setInputErrors(validationErrors);
-    } else {
-      signUp({ variables: { ...authState } });
-    }
-  };
-
-  useEffect(() => {
-    const { username, email, password } = authState;
-
-    if (username && email && password) {
-      setValuesProvided(true);
-    } else {
-      setValuesProvided(false);
-    }
-
-    if (Object.values(inputErrors).length > 0) {
-      setInputErrors({});
-    }
-  }, [authState]);
+  const [signIn, { loading: signingIn }] = useMutation(signInMutation, {
+    onCompleted: (data) => {
+      localStorage.setItem('user', JSON.stringify(data.signIn));
+      history.push('/');
+    },
+  });
 
   useEffect(() => {
     if (isNavBarVisible) {
@@ -95,27 +56,10 @@ const Auth = ({
         {path === '/auth/signup' ? 'SignUp' : 'Login'}
       </Text>
       {path === '/auth/signup' ? (
-        <Signup
-          authState={authState}
-          inputErrors={inputErrors}
-          isPasswordVisible={isPasswordVisible}
-          setPasswordVisibility={setPasswordVisibility}
-          handleOnChange={handleOnChange}
-        />
+        <Signup loading={signingUp} signUp={signUp} />
       ) : (
-        <p style={{ textAlign: 'center', color: '#000' }}>
-          This should be the login page
-        </p>
+        <Signin loading={signingIn} signIn={signIn} />
       )}
-      <SubmitButton
-        loadingText={
-          path === '/auth/signup' ? '...signing up...' : '...loging in...'
-        }
-        title={path === '/auth/signup' ? 'SignUp' : 'Login'}
-        isLoading={loading}
-        areValuesProvided={areValuesProvided}
-        handleSubmit={handleSubmit}
-      />
       <Box
         d="flex"
         alignItems="center"

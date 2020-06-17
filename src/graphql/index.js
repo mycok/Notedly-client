@@ -13,15 +13,16 @@ const cache = new InMemoryCache();
 const httpLink = createHttpLink({ uri });
 
 const authHeaderMiddlewareLink = new ApolloLink((operation, forward) => {
-  operation.setContext((prevContext) => ({
-    ...prevContext,
-    headers: {
-      ...prevContext.headers,
-      Authorization: localStorage.getItem('jwt')
-        ? `Bearer ${localStorage.getItem('jwt')}`
-        : null,
-    },
-  }));
+  const user = localStorage.getItem('user');
+  if (user) {
+    operation.setContext((prevContext) => ({
+      ...prevContext,
+      headers: {
+        ...prevContext.headers,
+        Authorization: `Bearer ${JSON.parse(user).token}`,
+      },
+    }));
+  }
 
   return forward(operation);
 });
