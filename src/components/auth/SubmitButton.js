@@ -11,6 +11,7 @@ const SubmitButton = ({
 }) => (
   <Button
     isFullWidth
+    _focus="none"
     isDisabled={!areValuesProvided}
     isLoading={areValuesProvided && isLoading}
     variantColor="teal"
