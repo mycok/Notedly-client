@@ -8,6 +8,8 @@ import AuthorNotes from './Note/AuthorNotes';
 import Favorites from './Note/Favorites';
 import Auth from './auth';
 
+import ProtectedRoute from './shared/ProtectedRoute';
+
 const AppRouter = () => {
   const [isNavBarVisible, toogleNavBarVisibility] = useState(true);
   return (
@@ -27,7 +29,7 @@ const AppRouter = () => {
           )}
         />
         <Route
-          path={['/auth/signup', '/auth/login']}
+          path={['/auth/signup', '/auth/signin']}
           render={(routeProps) => (
             <Auth
               isNavBarVisible={isNavBarVisible}
@@ -37,8 +39,8 @@ const AppRouter = () => {
           )}
         />
         <Route exact path="/authors/:authorId/notes" component={AuthorNotes} />
-        <Route exact path="/notes/:noteId" component={Note} />
-        <Route exact path="/favorites" component={Favorites} />
+        <ProtectedRoute exact path="/notes/:noteId" component={Note} />
+        <ProtectedRoute exact path="/favorites" component={Favorites} />
       </Switch>
     </Router>
   );
