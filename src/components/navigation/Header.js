@@ -8,6 +8,8 @@ import {
 import logo from 'url:../../images/logo.png';
 import MenuItems from './MenuItems';
 
+import { isAuthenticated } from '../../utils/authHelpers';
+
 const Header = ({ toogleNavBarVisibility }, props) => (
   <Flex
     as="nav"
@@ -54,26 +56,30 @@ const Header = ({ toogleNavBarVisibility }, props) => (
 
     <Flex width={{ sm: 'full', md: 'auto' }} mr={5} justify="flex-end">
       <>
-        <Link to="/auth/signup" style={{ marginRight: '1em' }}>
-          <Button
-            variantColor="teal"
-            variant="outline"
-            size="md"
-            onClick={() => toogleNavBarVisibility(false)}
-          >
-            SignUp
-          </Button>
-        </Link>
-        <Link to="/auth/login" style={{ marginRight: '1em' }}>
-          <Button
-            variantColor="teal"
-            variant="outline"
-            size="md"
-            onClick={() => toogleNavBarVisibility(false)}
-          >
-            Login
-          </Button>
-        </Link>
+        {!isAuthenticated() && (
+          <>
+            <Link to="/auth/signup" style={{ marginRight: '1em' }}>
+              <Button
+                variantColor="teal"
+                variant="outline"
+                size="md"
+                onClick={() => toogleNavBarVisibility(false)}
+              >
+                SignUp
+              </Button>
+            </Link>
+            <Link to="/auth/signin" style={{ marginRight: '1em' }}>
+              <Button
+                variantColor="teal"
+                variant="outline"
+                size="md"
+                onClick={() => toogleNavBarVisibility(false)}
+              >
+                Login
+              </Button>
+            </Link>
+          </>
+        )}
         <MenuItems />
       </>
     </Flex>

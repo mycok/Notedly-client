@@ -14,6 +14,7 @@ const Note = ({ match }) => {
   });
   // TODO:
   // - render a serverError component
+  // - show NavBar when redirected from login
   if (error) {
     if (error.networkError) {
       return <p>{`....error...${error.message}`}</p>;

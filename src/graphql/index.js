@@ -6,6 +6,8 @@ import {
 } from '@apollo/client';
 import { onError } from 'apollo-link-error';
 
+import { isAuthenticated } from '../utils/authHelpers';
+
 const uri = process.env.NODE_ENV === 'production'
   ? process.env.API_PROD_URL
   : process.env.API_DEV_URL;
@@ -13,13 +15,14 @@ const cache = new InMemoryCache();
 const httpLink = createHttpLink({ uri });
 
 const authHeaderMiddlewareLink = new ApolloLink((operation, forward) => {
-  const user = localStorage.getItem('user');
+  const user = isAuthenticated();
+
   if (user) {
     operation.setContext((prevContext) => ({
       ...prevContext,
       headers: {
         ...prevContext.headers,
-        Authorization: `Bearer ${JSON.parse(user).token}`,
+        Authorization: `Bearer ${user.token}`,
       },
     }));
   }

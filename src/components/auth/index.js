@@ -8,16 +8,21 @@ import Signup from './Signup';
 import Signin from './Signin';
 import { signUpMutation } from '../../graphql/mutations/signup';
 import { signInMutation } from '../../graphql/mutations/signin';
+import { authenticate } from '../../utils/authHelpers';
 
 const Auth = ({
-  match, history, isNavBarVisible, toogleNavBarVisibility,
+  location,
+  match,
+  history,
+  isNavBarVisible,
+  toogleNavBarVisibility,
 }) => {
   const { path } = match;
   const [serverError, setServerError] = useState(null);
 
   const [signUp, { loading: signingUp }] = useMutation(signUpMutation, {
     ignoreResults: true,
-    onCompleted: () => history.push('/auth/login'),
+    onCompleted: () => history.push('/auth/signin'),
     onError: (error) => {
       setServerError(error);
     },
@@ -25,8 +30,13 @@ const Auth = ({
 
   const [signIn, { loading: signingIn }] = useMutation(signInMutation, {
     onCompleted: (data) => {
-      localStorage.setItem('user', JSON.stringify(data.signIn));
-      history.push('/');
+      authenticate(data, () => {
+        if (location.state) {
+          history.push(location.state.from.pathname);
+        } else {
+          history.push('/');
+        }
+      });
     },
     onError: (error) => {
       setServerError(error);
@@ -85,9 +95,9 @@ const Auth = ({
             ? 'Already have an account?'
             : "Don't have an account?"}
           {' '}
-          <Link to={path === '/auth/signup' ? '/auth/login' : '/auth/signup'}>
+          <Link to={path === '/auth/signup' ? '/auth/signin' : '/auth/signup'}>
             <Text as="span" color="teal.500">
-              {path === '/auth/signup' ? 'Login' : 'Signup'}
+              {path === '/auth/signup' ? 'Sign In' : 'Sign Up'}
             </Text>
           </Link>
         </Text>
@@ -98,6 +108,7 @@ const Auth = ({
 
 Auth.propTypes = {
   match: instanceOf(Object).isRequired,
+  location: instanceOf(Object).isRequired,
   history: instanceOf(Object).isRequired,
   isNavBarVisible: bool.isRequired,
   toogleNavBarVisibility: func.isRequired,
