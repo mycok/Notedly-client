@@ -85,7 +85,7 @@ const Signin = ({
         <Stack spacing={4}>
           <InputGroup>
             <InputLeftElement>
-              <Icon name="email" color="green.800" />
+              <Icon name="email" color="#fff" />
             </InputLeftElement>
             <Input
               name="email"
@@ -96,7 +96,9 @@ const Signin = ({
               isInvalid={Object.values(inputErrors).length > 0}
               focusBorderColor="clear"
               errorBorderColor={inputErrors.email ? 'red.300' : 'clear'}
-              color="#000000"
+              border="none"
+              bg="#3b4048"
+              rounded="lg"
               onChange={handleOnChange}
             />
           </InputGroup>
@@ -110,7 +112,7 @@ const Signin = ({
 
           <InputGroup>
             <InputLeftElement>
-              <Icon name="lock" color="green.800" />
+              <Icon name="lock" color="#fff" />
             </InputLeftElement>
             <Input
               name="password"
@@ -121,14 +123,16 @@ const Signin = ({
               isInvalid={Object.values(inputErrors).length > 0}
               focusBorderColor="clear"
               errorBorderColor={inputErrors.password ? 'red.300' : 'clear'}
-              color="#000000"
+              border="none"
+              bg="#3b4048"
+              rounded="lg"
               onChange={handleOnChange}
             />
             <InputRightElement>
               <Icon
                 onClick={() => setPasswordVisibility(!isPasswordVisible)}
                 name={isPasswordVisible ? 'view' : 'view-off'}
-                color="green.800"
+                color="#fff"
                 cursor="pointer"
               />
             </InputRightElement>

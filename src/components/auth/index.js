@@ -50,16 +50,11 @@ const Auth = ({
       borderWidth="1px"
       padding={5}
       rounded="lg"
-      bg="#fff"
+      bg="#222121"
+      borderColor="#1a1a1a"
     >
-      <Text
-        fontSize="2xl"
-        fontWeight="bold"
-        textAlign="center"
-        color="gray.800"
-        mb={3}
-      >
-        {path === '/auth/signup' ? 'SignUp' : 'Login'}
+      <Text fontSize="2xl" fontWeight="bold" textAlign="center" mb={3}>
+        {path === '/auth/signup' ? 'Sign Up' : 'Sign In'}
       </Text>
       {path === '/auth/signup' ? (
         <Signup
@@ -83,15 +78,9 @@ const Auth = ({
         marginTop={3}
       >
         <Link to="/">
-          <Icon
-            name="chevron-left"
-            color="teal.900"
-            size="1.5em"
-            focusable
-            cursor="pointer"
-          />
+          <Icon name="chevron-left" size="1.5em" focusable cursor="pointer" />
         </Link>
-        <Text as="span" color="teal.900">
+        <Text as="span">
           {path === '/auth/signup'
             ? 'Already have an account?'
             : "Don't have an account?"}
