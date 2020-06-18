@@ -1,4 +1,5 @@
 import React from 'react';
+import { string, func } from 'prop-types';
 import {
   Menu,
   MenuButton,
@@ -9,10 +10,10 @@ import {
   MenuItem,
 } from '@chakra-ui/core';
 
-const MenuItems = () => (
+const MenuItems = ({ username, logout }) => (
   <Menu>
     <MenuButton as="div" color="gray.700" size="sm">
-      <Avatar size="sm" name="Michael Kibuuka" />
+      <Avatar size="sm" name={username} />
       <Icon name="chevron-down" />
     </MenuButton>
     <MenuList
@@ -21,10 +22,17 @@ const MenuItems = () => (
       borderColor="#1a1a1a"
     >
       <MenuGroup>
-        <MenuItem onClick={() => null}>SignOut</MenuItem>
+        <MenuItem _focus={{ bg: '#3b4048' }} onClick={logout}>
+          SignOut
+        </MenuItem>
       </MenuGroup>
     </MenuList>
   </Menu>
 );
+
+MenuItems.propTypes = {
+  username: string.isRequired,
+  logout: func.isRequired,
+};
 
 export default MenuItems;

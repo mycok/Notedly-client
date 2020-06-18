@@ -12,11 +12,4 @@ const isAuthenticated = () => {
   return false;
 };
 
-const logout = (cb) => {
-  if (typeof window !== 'undefined') {
-    localStorage.removeItem('user');
-    cb();
-  }
-};
-
-export { authenticate, isAuthenticated, logout };
+export { authenticate, isAuthenticated };
