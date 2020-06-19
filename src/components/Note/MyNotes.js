@@ -1,20 +1,20 @@
 import React from 'react';
-import { instanceOf } from 'prop-types';
-import { useQuery } from '@apollo/client';
 import { Box } from '@chakra-ui/core';
+import { useQuery } from '@apollo/client';
 
-import { NotesLoader } from '../shared/Loader';
-import NoteFeed from './NoteFeed';
-import NotFound from '../shared/NotFound';
 import { notesByAuthorQuery } from '../../graphql/queries/notesByAuthor';
+import NotFound from '../shared/NotFound';
+import NoteFeed from './NoteFeed';
+import { NotesLoader } from '../shared/Loader';
+import { isAuthenticated } from '../../utils/authHelpers';
 
-const AuthorNotes = ({ match }) => {
+const MyNotes = () => {
+  const user = isAuthenticated();
   const { loading, error, data } = useQuery(notesByAuthorQuery, {
-    errorPolicy: 'all',
-    variables: { id: match.params.authorId },
+    fetchPolicy: 'all',
+    variables: { id: user.user.id },
   });
-  // TODO:
-  // - render a serverError component
+
   if (error) {
     if (error.networkError) {
       return <p>{`....error...${error.message}`}</p>;
@@ -23,7 +23,10 @@ const AuthorNotes = ({ match }) => {
       <p key={message.charAt(2)}>{`....error...${message}`}</p>
     ));
   }
-
+  // TODO:
+  // - use the me query and pass the favorites list to the NoteFeed component
+  // - display the favorites as a list of notes or display a not found component
+  // - render a serverError component in case of an error while fetching the data
   return (
     <Box
       d="flex"
@@ -46,8 +49,4 @@ const AuthorNotes = ({ match }) => {
   );
 };
 
-AuthorNotes.propTypes = {
-  match: instanceOf(Object).isRequired,
-};
-
-export default AuthorNotes;
+export default MyNotes;

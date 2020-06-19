@@ -1,8 +1,14 @@
 import React from 'react';
 import { func } from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 import {
-  Image, Flex, IconButton, Button, Stack,
+  Image,
+  Flex,
+  IconButton,
+  Button,
+  Link,
+  Stack,
+  Box,
 } from '@chakra-ui/core';
 
 import logo from 'url:../../images/logo.png';
@@ -16,7 +22,7 @@ const Header = ({ toogleNavBarVisibility, logout }, props) => {
     <Flex
       as="nav"
       align="center"
-      justify="space-between"
+      justify="space-around"
       padding="0.8rem"
       color="#fff"
       bg="#222121"
@@ -28,37 +34,67 @@ const Header = ({ toogleNavBarVisibility, logout }, props) => {
       {...props}
     >
       <Flex align="center" mr={5} justify="flex-start">
-        <Link to="/">
+        <RouterLink to="/">
           <Image src={logo} alt="Notedly" />
-        </Link>
+        </RouterLink>
       </Flex>
 
-      <Flex>
-        <Stack isInline align="center" justify="space-between" spacing={100}>
-          <IconButton
-            aria-label="favorites"
-            icon="favorites"
-            color="white.800"
-            size="sm"
-            isRound
-            variant="outline"
-            borderWidth="2px"
-            borderColor="teal.800"
-            _hover={{ bg: '#3b4048' }}
-          />
-          <IconButton
-            aria-label="favorites"
-            icon="notes"
-            color="white.800"
-            size="sm"
-            isRound
-            variant="outline"
-            borderWidth="2px"
-            borderColor="teal.800"
-            _hover={{ bg: '#3b4048' }}
-          />
+      <Box />
+
+      <Box width="200px">
+        <Stack
+          direction="row"
+          spacing={10}
+          align="center"
+          justify="space-between"
+        >
+          {authenticatedUser && (
+            <>
+              <Link as={RouterLink} to="/my-favorites">
+                <IconButton
+                  aria-label="favorites"
+                  icon="favorites"
+                  color="white.800"
+                  size="sm"
+                  isRound
+                  variant="outline"
+                  borderWidth="1"
+                  borderColor="teal.800"
+                  _hover={{ bg: '#3b4048' }}
+                />
+              </Link>
+              <Link as={RouterLink} to="/my-notes">
+                <IconButton
+                  aria-label="favorites"
+                  icon="notes"
+                  color="white.800"
+                  size="sm"
+                  isRound
+                  variant="outline"
+                  borderWidth="1px"
+                  borderColor="teal.800"
+                  _hover={{ bg: '#3b4048' }}
+                />
+              </Link>
+            </>
+          )}
+          <Link as={RouterLink} to="/authors">
+            <IconButton
+              aria-label="authors"
+              icon="users"
+              color="white.800"
+              size="sm"
+              isRound
+              variant="outline"
+              borderWidth="1px"
+              borderColor="teal.800"
+              _hover={{ bg: '#3b4048' }}
+            />
+          </Link>
         </Stack>
-      </Flex>
+      </Box>
+
+      <Box />
 
       <Flex width={{ sm: 'full', md: 'auto' }} mr={5} justify="flex-end">
         {authenticatedUser ? (
@@ -68,7 +104,7 @@ const Header = ({ toogleNavBarVisibility, logout }, props) => {
           />
         ) : (
           <>
-            <Link to="/auth/signup" style={{ marginRight: '1em' }}>
+            <RouterLink to="/auth/signup" style={{ marginRight: '1em' }}>
               <Button
                 variantColor="teal"
                 variant="outline"
@@ -78,8 +114,8 @@ const Header = ({ toogleNavBarVisibility, logout }, props) => {
               >
                 SignUp
               </Button>
-            </Link>
-            <Link to="/auth/signin" style={{ marginRight: '1em' }}>
+            </RouterLink>
+            <RouterLink to="/auth/signin" style={{ marginRight: '1em' }}>
               <Button
                 variantColor="teal"
                 variant="outline"
@@ -89,7 +125,7 @@ const Header = ({ toogleNavBarVisibility, logout }, props) => {
               >
                 Login
               </Button>
-            </Link>
+            </RouterLink>
           </>
         )}
       </Flex>

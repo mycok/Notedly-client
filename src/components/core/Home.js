@@ -2,8 +2,6 @@ import React from 'react';
 import { bool, func } from 'prop-types';
 import { Grid, Box } from '@chakra-ui/core';
 
-import Authors from '../author/Authors';
-import Favorites from '../Note/Favorites';
 import Notes from '../Note/Notes';
 
 const Home = ({ isNavBarVisible, toogleNavBarVisibility }) => {
@@ -20,15 +18,7 @@ const Home = ({ isNavBarVisible, toogleNavBarVisibility }) => {
         gap={2}
         height={{ sm: '90vh', md: '94vh' }}
       >
-        <Box
-          d="flex"
-          align="center"
-          justify="center"
-          overflow="scroll"
-          padding={2}
-        >
-          <Authors />
-        </Box>
+        <Box />
         <Box
           d="flex"
           align="center"
@@ -39,9 +29,7 @@ const Home = ({ isNavBarVisible, toogleNavBarVisibility }) => {
         >
           <Notes />
         </Box>
-        <Box d="flex" align="center" justify="center" overflow="scroll">
-          <Favorites />
-        </Box>
+        <Box />
       </Grid>
     </>
   );
