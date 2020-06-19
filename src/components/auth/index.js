@@ -33,6 +33,7 @@ const Auth = ({
       authenticate(data, () => {
         if (location.state) {
           history.push(location.state.from.pathname);
+          toogleNavBarVisibility(true);
         } else {
           history.push('/');
         }

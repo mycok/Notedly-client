@@ -1,16 +1,12 @@
-import React, { useState } from 'react';
-import { func } from 'prop-types';
-import { useHistory } from 'react-router-dom';
+import React from 'react';
+import { func, instanceOf } from 'prop-types';
+import { withRouter } from 'react-router-dom';
 
 import Header from './Header';
 
-const NavBar = ({ toogleNavBarVisibility }) => {
-  const history = useHistory();
-  const [, setLogOutStatus] = useState(false);
-
+const NavBar = ({ toogleNavBarVisibility, history }) => {
   const logout = () => {
     localStorage.removeItem('user');
-    setLogOutStatus(true);
     history.push('/');
   };
 
@@ -21,6 +17,7 @@ const NavBar = ({ toogleNavBarVisibility }) => {
 
 NavBar.propTypes = {
   toogleNavBarVisibility: func.isRequired,
+  history: instanceOf(Object).isRequired,
 };
 
-export default React.memo(NavBar);
+export default React.memo(withRouter(NavBar));

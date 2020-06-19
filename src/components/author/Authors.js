@@ -21,7 +21,17 @@ const Authors = () => {
   // - check for empty author list and display a no users found component
   // - render a serverError component
   return (
-    <Box>
+    <Box
+      // d="flex"
+      dir="column"
+      // align="center"
+      // justify="center"
+      overflow="scroll"
+      width="500px"
+      padding={2}
+      // alignSelf="center"
+      margin="auto"
+    >
       {loading ? (
         <UserLoader backgroundColor="#222121" />
       ) : (
