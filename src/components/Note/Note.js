@@ -2,7 +2,9 @@ import React from 'react';
 import { instanceOf } from 'prop-types';
 import ReactMarkdown from 'react-markdown';
 import { format } from 'date-fns';
-import { Avatar, Box, Text } from '@chakra-ui/core';
+import {
+  Avatar, Box, Text, IconButton,
+} from '@chakra-ui/core';
 import { useQuery } from '@apollo/client';
 
 import { noteByIdQuery } from '../../graphql/queries/note';
@@ -61,6 +63,20 @@ const Note = ({ match }) => {
           </Box>
           <Box m={2} p={2}>
             <ReactMarkdown source={data.note.content} />
+          </Box>
+          <Box d="flex" alignItems="center">
+            <IconButton
+              icon="favorites"
+              size="sm"
+              variant="ghost"
+              variantColor="red"
+              aria-label="favorite a note"
+              isRound
+              mr={3}
+              _hover={{ bg: '#3b4048' }}
+              _focus={{ borderColor: '#3b4048' }}
+            />
+            <span>{data.note.favoriteCount}</span>
           </Box>
         </>
       )}
