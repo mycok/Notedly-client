@@ -114,7 +114,7 @@ const Signup = ({
 
           <InputGroup>
             <InputLeftElement>
-              <Icon name="email" color="#fff" />
+              <Icon name="email" />
             </InputLeftElement>
             <Input
               name="email"
@@ -141,7 +141,7 @@ const Signup = ({
 
           <InputGroup>
             <InputLeftElement>
-              <Icon name="lock" color="#fff" />
+              <Icon name="lock" />
             </InputLeftElement>
             <Input
               name="password"
@@ -161,7 +161,6 @@ const Signup = ({
               <Icon
                 onClick={() => setPasswordVisibility(!isPasswordVisible)}
                 name={isPasswordVisible ? 'view' : 'view-off'}
-                color="#fff"
                 cursor="pointer"
               />
             </InputRightElement>

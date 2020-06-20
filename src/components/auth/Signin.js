@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import {
   bool, func, instanceOf, any,
 } from 'prop-types';
@@ -21,23 +21,48 @@ import { authValidation } from '../../utils/validation';
 const Signin = ({
   loading, signIn, serverError, setServerError,
 }) => {
-  const [signinState, setSigninState] = useState({
-    email: '',
-    password: '',
-  });
-
-  const [isPasswordVisible, setPasswordVisibility] = useState(false);
-  const [areValuesProvided, setValuesProvided] = useState(false);
-  const [inputErrors, setInputErrors] = useState({});
+  const [state, dispatch] = useReducer(
+    (initialState, action) => {
+      switch (action.type) {
+        case 'ON_CHANGE': {
+          const {
+            target: { name, value },
+          } = action.event;
+          return {
+            ...initialState,
+            signinState: { ...initialState.signinState, [name]: value },
+          };
+        }
+        case 'TOGGLE_PASSWORD_VISIBILITY':
+          return {
+            ...initialState,
+            isPasswordVisible: action.isPasswordVisible,
+          };
+        case 'CHECK_INPUT_VALUES':
+          return {
+            ...initialState,
+            areValuesProvided: action.areValuesProvided,
+          };
+        case 'SET_INPUT_ERRORS':
+          return { ...initialState, inputErrors: action.inputErrors };
+        default:
+          return initialState;
+      }
+    },
+    {
+      signinState: {
+        email: '',
+        password: '',
+      },
+      isPasswordVisible: false,
+      areValuesProvided: false,
+      inputErrors: {},
+    },
+  );
 
   const handleOnChange = (event) => {
-    const {
-      target: { name, value },
-    } = event;
-    setSigninState((prevSigninState) => ({
-      ...prevSigninState,
-      [name]: value,
-    }));
+    event.persist();
+    dispatch({ type: 'ON_CHANGE', event });
 
     if (serverError) {
       setServerError(null);
@@ -45,30 +70,30 @@ const Signin = ({
   };
 
   const handleSignIn = () => {
-    const validationErrors = authValidation(
-      signinState.email,
-      signinState.password,
+    const inputErrors = authValidation(
+      state.signinState.email,
+      state.signinState.password,
     );
-    if (validationErrors.email || validationErrors.password) {
-      setInputErrors(validationErrors);
+    if (inputErrors.email || inputErrors.password) {
+      dispatch({ type: 'SET_INPUT_ERRORS', inputErrors });
     } else {
-      signIn({ variables: { ...signinState } });
+      signIn({ variables: { ...state.signinState } });
     }
   };
 
   useEffect(() => {
-    const { email, password } = signinState;
+    const { email, password } = state.signinState;
 
     if (email && password) {
-      setValuesProvided(true);
+      dispatch({ type: 'CHECK_INPUT_VALUES', areValuesProvided: true });
     } else {
-      setValuesProvided(false);
+      dispatch({ type: 'CHECK_INPUT_VALUES', areValuesProvided: false });
     }
 
-    if (Object.values(inputErrors).length > 0) {
-      setInputErrors({});
+    if (Object.values(state.inputErrors).length > 0) {
+      dispatch({ type: 'SET_INPUT_ERRORS', inputErrors: {} });
     }
-  }, [signinState]);
+  }, [state.signinState]);
 
   useEffect(() => {
     setServerError(null);
@@ -85,44 +110,46 @@ const Signin = ({
         <Stack spacing={4}>
           <InputGroup>
             <InputLeftElement>
-              <Icon name="email" color="#fff" />
+              <Icon name="email" />
             </InputLeftElement>
             <Input
               name="email"
               isRequired
               type="email"
               placeholder="Enter email....."
-              value={signinState.email}
-              isInvalid={Object.values(inputErrors).length > 0}
+              value={state.signinState.email}
+              isInvalid={Object.values(state.inputErrors).length > 0}
               focusBorderColor="clear"
-              errorBorderColor={inputErrors.email ? 'red.300' : 'clear'}
+              errorBorderColor={state.inputErrors.email ? 'red.300' : 'clear'}
               border="none"
               bg="#3b4048"
               rounded="lg"
               onChange={handleOnChange}
             />
           </InputGroup>
-          {inputErrors.email && (
+          {state.inputErrors.email && (
             <FormHelperText m={0} color="red.500">
               <Icon name="warning" />
               {' '}
-              {inputErrors.email}
+              {state.inputErrors.email}
             </FormHelperText>
           )}
 
           <InputGroup>
             <InputLeftElement>
-              <Icon name="lock" color="#fff" />
+              <Icon name="lock" />
             </InputLeftElement>
             <Input
               name="password"
               isRequired
-              type={isPasswordVisible ? '' : 'password'}
+              type={state.isPasswordVisible ? '' : 'password'}
               placeholder="Enter password....."
-              value={signinState.password}
-              isInvalid={Object.values(inputErrors).length > 0}
+              value={state.signinState.password}
+              isInvalid={Object.values(state.inputErrors).length > 0}
               focusBorderColor="clear"
-              errorBorderColor={inputErrors.password ? 'red.300' : 'clear'}
+              errorBorderColor={
+                state.inputErrors.password ? 'red.300' : 'clear'
+              }
               border="none"
               bg="#3b4048"
               rounded="lg"
@@ -130,18 +157,20 @@ const Signin = ({
             />
             <InputRightElement>
               <Icon
-                onClick={() => setPasswordVisibility(!isPasswordVisible)}
-                name={isPasswordVisible ? 'view' : 'view-off'}
-                color="#fff"
+                onClick={() => dispatch({
+                  type: 'TOGGLE_PASSWORD_VISIBILITY',
+                  isPasswordVisible: !state.isPasswordVisible,
+                })}
+                name={state.isPasswordVisible ? 'view' : 'view-off'}
                 cursor="pointer"
               />
             </InputRightElement>
           </InputGroup>
-          {inputErrors.password && (
+          {state.inputErrors.password && (
             <FormHelperText m={0} color="red.500">
               <Icon name="warning" />
               {' '}
-              {inputErrors.password}
+              {state.inputErrors.password}
             </FormHelperText>
           )}
         </Stack>
@@ -150,7 +179,7 @@ const Signin = ({
         loadingText="...signing in..."
         title="SignIn"
         isLoading={loading}
-        areValuesProvided={areValuesProvided}
+        areValuesProvided={state.areValuesProvided}
         handler={handleSignIn}
       />
     </>

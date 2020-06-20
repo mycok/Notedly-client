@@ -9,6 +9,7 @@ import {
   Link,
   Stack,
   Box,
+  Tooltip,
 } from '@chakra-ui/core';
 
 import logo from 'url:../../images/logo.png';
@@ -51,45 +52,54 @@ const Header = ({ toogleNavBarVisibility, logout }, props) => {
           {authenticatedUser && (
             <>
               <Link as={RouterLink} to="/my-favorites">
-                <IconButton
-                  aria-label="favorites"
-                  icon="favorites"
-                  color="white.800"
-                  size="sm"
-                  isRound
-                  variant="outline"
-                  borderWidth="1"
-                  borderColor="teal.800"
-                  _hover={{ bg: '#3b4048' }}
-                />
+                <Tooltip label="My Favorites" placement="bottom" bg="#222121">
+                  <IconButton
+                    aria-label="favorites"
+                    icon="favorites"
+                    size="sm"
+                    isRound
+                    variant="outline"
+                    variantColor="red"
+                    borderWidth="2px"
+                    borderColor="teal.800"
+                    _hover={{ bg: '#3b4048' }}
+                    _focus={{ borderColor: '#ffffff' }}
+                  />
+                </Tooltip>
               </Link>
               <Link as={RouterLink} to="/my-notes">
-                <IconButton
-                  aria-label="favorites"
-                  icon="notes"
-                  color="white.800"
-                  size="sm"
-                  isRound
-                  variant="outline"
-                  borderWidth="1px"
-                  borderColor="teal.800"
-                  _hover={{ bg: '#3b4048' }}
-                />
+                <Tooltip label="My Notes" placement="bottom" bg="#222121">
+                  <IconButton
+                    aria-label="notes"
+                    icon="notes"
+                    color="white.800"
+                    size="sm"
+                    isRound
+                    variant="outline"
+                    borderWidth="2px"
+                    borderColor="teal.800"
+                    _hover={{ bg: '#3b4048' }}
+                    _focus={{ borderColor: '#ffffff' }}
+                  />
+                </Tooltip>
               </Link>
             </>
           )}
           <Link as={RouterLink} to="/authors">
-            <IconButton
-              aria-label="authors"
-              icon="users"
-              color="white.800"
-              size="sm"
-              isRound
-              variant="outline"
-              borderWidth="1px"
-              borderColor="teal.800"
-              _hover={{ bg: '#3b4048' }}
-            />
+            <Tooltip label="Authors" placement="bottom" bg="#222121">
+              <IconButton
+                aria-label="authors"
+                icon="users"
+                color="white.800"
+                size="sm"
+                isRound
+                variant="outline"
+                borderWidth="2px"
+                borderColor="teal.800"
+                _hover={{ bg: '#3b4048' }}
+                _focus={{ borderColor: '#ffffff' }}
+              />
+            </Tooltip>
           </Link>
         </Stack>
       </Box>
