@@ -6,6 +6,9 @@ import { Box } from '@chakra-ui/core';
 import { NotesLoader } from '../shared/Loader';
 import NoteFeed from './NoteFeed';
 import NotFound from '../shared/NotFound';
+import ErrorAlert from '../shared/ErrorAlert';
+import NotesImage from '../../images/notes.svg';
+import GraphqlErrorHandler from '../shared/GraphqlErrorHandler';
 import { notesByAuthorQuery } from '../../graphql/queries/notesByAuthor';
 
 const AuthorNotes = ({ match }) => {
@@ -13,16 +16,6 @@ const AuthorNotes = ({ match }) => {
     errorPolicy: 'all',
     variables: { id: match.params.authorId },
   });
-  // TODO:
-  // - render a serverError component
-  if (error) {
-    if (error.networkError) {
-      return <p>{`....error...${error.message}`}</p>;
-    }
-    return error.graphQLErrors.map(({ message }) => (
-      <p key={message.charAt(2)}>{`....error...${message}`}</p>
-    ));
-  }
 
   return (
     <Box
@@ -35,12 +28,16 @@ const AuthorNotes = ({ match }) => {
       alignSelf="center"
       margin="auto"
     >
+      {error && <GraphqlErrorHandler err={error} ErrComponent={ErrorAlert} />}
       {loading && <NotesLoader backgroundColor="#222121" />}
-      {!loading && data.notesByAuthor.length > 0 && (
-        <NoteFeed notes={data.notesByAuthor} />
-      )}
-      {!loading && data.notesByAuthor.length === 0 && (
-        <NotFound size="1000px" />
+      {data && data.notesByAuthor.length === 0 ? (
+        <NotFound
+          size="1000px"
+          NotFoundComp={NotesImage}
+          text="No Notes Available !"
+        />
+      ) : (
+        data && <NoteFeed notes={data.notesByAuthor} />
       )}
     </Box>
   );

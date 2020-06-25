@@ -5,6 +5,8 @@ import { noteFeedQuery } from '../../graphql/queries/noteFeed';
 import NoteFeed from './NoteFeed';
 import { NotesLoader } from '../shared/Loader';
 import NotFound from '../shared/NotFound';
+import ErrorAlert from '../shared/ErrorAlert';
+import GraphqlErrorHandler from '../shared/GraphqlErrorHandler';
 
 const Notes = () => {
   const { loading, error, data } = useQuery(noteFeedQuery, {
@@ -14,12 +16,7 @@ const Notes = () => {
   if (loading) return <NotesLoader backgroundColor="#222121" />;
 
   if (error) {
-    if (error.networkError) {
-      return <p>{`....error...${error.message}`}</p>;
-    }
-    return error.graphQLErrors.map(({ message }) => (
-      <p key={message.charAt(2)}>{`....error...${message}`}</p>
-    ));
+    return <GraphqlErrorHandler err={error} ErrComponent={ErrorAlert} />;
   }
 
   return data.noteFeed.notes.length > 0 ? (

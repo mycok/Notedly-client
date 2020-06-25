@@ -9,24 +9,13 @@ import { useQuery } from '@apollo/client';
 
 import { noteByIdQuery } from '../../graphql/queries/note';
 import { NotesLoader } from '../shared/Loader';
+import ErrorAlert from '../shared/ErrorAlert';
+import GraphqlErrorHandler from '../shared/GraphqlErrorHandler';
 
 const Note = ({ match }) => {
   const { loading, error, data } = useQuery(noteByIdQuery, {
     variables: { id: match.params.noteId },
   });
-  // TODO:
-  // - render a serverError component
-  // - show NavBar when redirected from login
-  if (error) {
-    if (error.networkError) {
-      return <p>{`....error...${error.message}`}</p>;
-    }
-    return error.graphQLErrors.map(({ message }) => (
-      <p key={message.charAt(2)} style={{ textAlign: 'center' }}>
-        {`....error...${message}`}
-      </p>
-    ));
-  }
 
   return (
     <Box
@@ -42,9 +31,9 @@ const Note = ({ match }) => {
       mt={3}
       mb={3}
     >
-      {loading ? (
-        <NotesLoader />
-      ) : (
+      {error && <GraphqlErrorHandler err={error} ErrComponent={ErrorAlert} />}
+      {loading && <NotesLoader />}
+      {data && (
         <>
           <Box d="flex" justifyContent="space-between" alignItems="center">
             <Box d="flex" alignItems="center">

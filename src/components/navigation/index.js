@@ -3,15 +3,22 @@ import { func, instanceOf } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
 import Header from './Header';
+import { isAuthenticated } from '../../utils/authHelpers';
 
 const NavBar = ({ toogleNavBarVisibility, history }) => {
+  const authenticatedUser = isAuthenticated();
+
   const logout = () => {
     localStorage.removeItem('user');
     history.push('/');
   };
 
   return (
-    <Header logout={logout} toogleNavBarVisibility={toogleNavBarVisibility} />
+    <Header
+      authenticatedUser={authenticatedUser}
+      logout={logout}
+      toogleNavBarVisibility={toogleNavBarVisibility}
+    />
   );
 };
 
@@ -20,4 +27,4 @@ NavBar.propTypes = {
   history: instanceOf(Object).isRequired,
 };
 
-export default React.memo(withRouter(NavBar));
+export default withRouter(NavBar);
