@@ -6,6 +6,9 @@ import { notesByAuthorQuery } from '../../graphql/queries/notesByAuthor';
 import NotFound from '../shared/NotFound';
 import NoteFeed from './NoteFeed';
 import { NotesLoader } from '../shared/Loader';
+import NotesImage from '../../images/notes.svg';
+import ErrorAlert from '../shared/ErrorAlert';
+import GraphqlErrorHandler from '../shared/GraphqlErrorHandler';
 import { isAuthenticated } from '../../utils/authHelpers';
 
 const MyNotes = () => {
@@ -15,18 +18,6 @@ const MyNotes = () => {
     variables: { id: user.user.id },
   });
 
-  if (error) {
-    if (error.networkError) {
-      return <p>{`....error...${error.message}`}</p>;
-    }
-    return error.graphQLErrors.map(({ message }) => (
-      <p key={message.charAt(2)}>{`....error...${message}`}</p>
-    ));
-  }
-  // TODO:
-  // - use the me query and pass the favorites list to the NoteFeed component
-  // - display the favorites as a list of notes or display a not found component
-  // - render a serverError component in case of an error while fetching the data
   return (
     <Box
       d="flex"
@@ -38,12 +29,16 @@ const MyNotes = () => {
       alignSelf="center"
       margin="auto"
     >
+      {error && <GraphqlErrorHandler err={error} ErrComponent={ErrorAlert} />}
       {loading && <NotesLoader backgroundColor="#222121" />}
-      {!loading && data.notesByAuthor.length > 0 && (
-        <NoteFeed notes={data.notesByAuthor} />
-      )}
-      {!loading && data.notesByAuthor.length === 0 && (
-        <NotFound size="1000px" />
+      {data && data.notesByAuthor.length === 0 ? (
+        <NotFound
+          size="1000px"
+          NotFoundComp={NotesImage}
+          text="No Notes Available !"
+        />
+      ) : (
+        data && <NoteFeed notes={data.notesByAuthor} />
       )}
     </Box>
   );

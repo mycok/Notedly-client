@@ -15,14 +15,25 @@ const cache = new InMemoryCache();
 const httpLink = createHttpLink({ uri });
 
 const authHeaderMiddlewareLink = new ApolloLink((operation, forward) => {
-  const user = isAuthenticated();
+  const publicOperations = [
+    'signUp',
+    'signIn',
+    'noteFeed',
+    'users',
+    'notesByAuthor',
+  ];
 
+  if (publicOperations.includes(operation.operationName)) {
+    return forward(operation);
+  }
+
+  const user = isAuthenticated();
   if (user) {
     operation.setContext((prevContext) => ({
       ...prevContext,
       headers: {
         ...prevContext.headers,
-        Authorization: `Bearer ${user.token}`,
+        authorization: `Bearer ${user.token}`,
       },
     }));
   }
@@ -33,11 +44,18 @@ const authHeaderMiddlewareLink = new ApolloLink((operation, forward) => {
 export const client = new ApolloClient({
   link: ApolloLink.from([
     authHeaderMiddlewareLink,
-    onError(({ graphQLErrors }) => {
-      if (graphQLErrors) {
-        graphQLErrors.map(({ extensions }) => {
+    onError(({ networkError }) => {
+      /*
+        check the networkError object for 'UNAUTHENTICATED' code
+        which would mean that either the authorization header was not set or the token has expired
+        if the token is expired, then we should remove it from
+        the local storage and prompt the user to login fresh
+       */
+      if (networkError) {
+        networkError.result.errors.map(({ extensions }) => {
           if (extensions.code === 'UNAUTHENTICATED') {
-            localStorage.removeItem('jwt');
+            localStorage.removeItem('user');
+            client.resetStore();
           }
         });
       }

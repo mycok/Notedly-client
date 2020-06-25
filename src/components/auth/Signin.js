@@ -15,7 +15,7 @@ import {
 } from '@chakra-ui/core';
 
 import SubmitButton from './SubmitButton';
-import CustomAlert from '../shared/Alert';
+import CustomInputErrorAlert from '../shared/Alert';
 import { authValidation } from '../../utils/validation';
 
 const Signin = ({
@@ -103,7 +103,9 @@ const Signin = ({
     <>
       <Box mb={3}>
         {serverError && (
-          <CustomAlert message={serverError.graphQLErrors[0].message} />
+          <CustomInputErrorAlert
+            message={serverError.graphQLErrors[0].message}
+          />
         )}
       </Box>
       <FormControl mb={5}>
