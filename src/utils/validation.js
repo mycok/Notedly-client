@@ -10,7 +10,7 @@ const passwordRegex = (password) => {
 
 const usernameLength = (username) => username.length >= 3;
 
-export const authValidation = (email, password, username = '') => {
+export const authValidation = (email, password, username = undefined) => {
   const validationErrors = {};
 
   if (username && !usernameLength(username)) {

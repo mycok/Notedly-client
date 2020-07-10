@@ -2,7 +2,7 @@ import React from 'react';
 import { bool, func } from 'prop-types';
 import { Grid, Box } from '@chakra-ui/core';
 
-import Notes from '../Note/Notes';
+import Notes from '../note/Notes';
 
 const Home = ({ isNavBarVisible, toogleNavBarVisibility }) => {
   React.useEffect(() => {

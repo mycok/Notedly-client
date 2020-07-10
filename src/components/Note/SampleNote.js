@@ -5,16 +5,12 @@ import { format } from 'date-fns';
 import { Avatar, Box, Text } from '@chakra-ui/core';
 import { Link } from 'react-router-dom';
 
-const SampleNote = ({ note }) => {
-  const {
-    id,
-    author: { avatar, username },
-    content,
-    createdAt,
-  } = note;
+import { isAuthenticated } from '../../utils/authHelpers';
 
+const SampleNote = ({ note }) => {
+  const user = isAuthenticated();
   return (
-    <Link to={`/notes/${id}`}>
+    <Link to={`/notes/${note.id}`}>
       <Box
         borderWidth="1px"
         rounded="lg"
@@ -26,7 +22,6 @@ const SampleNote = ({ note }) => {
         boxShadow="lg"
         bg="#222121"
         color="#fff"
-        onClick={() => null}
       >
         <Box
           d="flex"
@@ -35,17 +30,21 @@ const SampleNote = ({ note }) => {
           alignItems="center"
         >
           <Box d="flex" alignItems="center">
-            <Avatar size="sm" name={username} src={avatar} />
+            <Avatar
+              size="sm"
+              name={(note.author && note.author.username) || user.user.username}
+              src={(note.author && note.author.avatar) || user.user.avatar}
+            />
             <Text ml={2} color="grey" fontSize="sm">
-              {username}
+              {(note.author && note.author.username) || user.user.username}
             </Text>
           </Box>
           <Text color="grey" fontSize="sm">
-            {format(new Date(createdAt), 'MMM dd yyyy')}
+            {format(new Date(note.createdAt), 'MMM dd yyyy')}
           </Text>
         </Box>
         <Box mt={5}>
-          <ReactMarkdown source={content.substring(0, 180)} />
+          <ReactMarkdown source={note.content.substring(0, 180)} />
         </Box>
       </Box>
     </Link>

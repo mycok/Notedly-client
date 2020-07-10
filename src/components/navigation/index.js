@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import Header from './Header';
 import { isAuthenticated } from '../../utils/authHelpers';
 
-const NavBar = ({ toogleNavBarVisibility, history }) => {
+const NavBar = ({ toogleNavBarVisibility, history, location }) => {
   const authenticatedUser = isAuthenticated();
 
   const logout = () => {
@@ -15,6 +15,7 @@ const NavBar = ({ toogleNavBarVisibility, history }) => {
 
   return (
     <Header
+      path={location.pathname}
       authenticatedUser={authenticatedUser}
       logout={logout}
       toogleNavBarVisibility={toogleNavBarVisibility}
@@ -23,6 +24,7 @@ const NavBar = ({ toogleNavBarVisibility, history }) => {
 };
 
 NavBar.propTypes = {
+  location: instanceOf(Object).isRequired,
   toogleNavBarVisibility: func.isRequired,
   history: instanceOf(Object).isRequired,
 };

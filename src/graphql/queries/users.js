@@ -9,9 +9,6 @@ export const usersQuery = gql`
       avatar
       notes {
         id
-        content
-        favoriteCount
-        createdAt
       }
     }
   }

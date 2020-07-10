@@ -1,5 +1,7 @@
 import React from 'react';
-import { func, bool, oneOfType } from 'prop-types';
+import {
+  func, bool, oneOfType, object, string,
+} from 'prop-types';
 import { Link as RouterLink } from 'react-router-dom';
 import {
   Image,
@@ -16,7 +18,9 @@ import logo from 'url:../../images/logo.png';
 import MenuItems from './MenuItems';
 
 const Header = (
-  { toogleNavBarVisibility, authenticatedUser, logout },
+  {
+    toogleNavBarVisibility, authenticatedUser, logout, path,
+  },
   props,
 ) => (
   <Flex
@@ -81,6 +85,23 @@ const Header = (
                 />
               </Tooltip>
             </Link>
+            {path === '/my-notes' && (
+              <Link as={RouterLink} to="/new-note">
+                <Tooltip label="New Note" placement="bottom" bg="#222121">
+                  <IconButton
+                    aria-label="new note"
+                    icon="add"
+                    size="sm"
+                    isRound
+                    variant="outline"
+                    borderWidth="2px"
+                    borderColor="teal.800"
+                    _hover={{ bg: '#3b4048' }}
+                    _focus={{ borderColor: '#ffffff' }}
+                  />
+                </Tooltip>
+              </Link>
+            )}
           </>
         )}
         <Link as={RouterLink} to="/authors">
@@ -138,7 +159,8 @@ const Header = (
 );
 
 Header.propTypes = {
-  authenticatedUser: oneOfType([Object, bool]).isRequired,
+  path: string.isRequired,
+  authenticatedUser: oneOfType([object, bool]).isRequired,
   logout: func.isRequired,
   toogleNavBarVisibility: func.isRequired,
 };
