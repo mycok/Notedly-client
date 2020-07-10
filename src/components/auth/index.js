@@ -6,6 +6,7 @@ import { Box, Text, Icon } from '@chakra-ui/core';
 import { Link } from 'react-router-dom';
 import Signup from './Signup';
 import Signin from './Signin';
+import CustomInputErrorAlert from '../shared/Alert';
 import { signUpMutation } from '../../graphql/mutations/signup';
 import { signInMutation } from '../../graphql/mutations/signin';
 import { authenticate } from '../../utils/authHelpers';
@@ -67,6 +68,13 @@ const Auth = ({
       <Text fontSize="2xl" fontWeight="bold" textAlign="center" mb={3}>
         {path === '/auth/signup' ? 'Sign Up' : 'Sign In'}
       </Text>
+      {serverError && (
+        <Box mb={3}>
+          <CustomInputErrorAlert
+            message={serverError.graphQLErrors[0].message}
+          />
+        </Box>
+      )}
       {path === '/auth/signup' ? (
         <Signup
           loading={signingUp}

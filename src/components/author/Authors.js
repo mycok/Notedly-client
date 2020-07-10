@@ -1,4 +1,5 @@
 import React from 'react';
+import { element, oneOfType, arrayOf } from 'prop-types';
 import { useQuery } from '@apollo/client';
 import { Box } from '@chakra-ui/core';
 
@@ -10,24 +11,52 @@ import ErrorAlert from '../shared/ErrorAlert';
 import NotFound from '../shared/NotFound';
 import AuthorImage from '../../images/authors.svg';
 
+const AuthorsBox = ({ children }) => (
+  <Box dir="column" overflow="scroll" width="500px" padding={2} margin="auto">
+    {children}
+  </Box>
+);
+
 const Authors = () => {
   const { loading, error, data } = useQuery(usersQuery, { errorPolicy: 'all' });
 
-  return (
-    <Box dir="column" overflow="scroll" width="500px" padding={2} margin="auto">
-      {error && <GraphqlErrorHandler err={error} ErrComponent={ErrorAlert} />}
-      {loading && <UserLoader backgroundColor="#fff" />}
-      {data && data.users.length === 0 ? (
+  if (loading) {
+    return (
+      <AuthorsBox>
+        <UserLoader backgroundColor="#222121" />
+      </AuthorsBox>
+    );
+  }
+
+  if (error) {
+    return (
+      <AuthorsBox>
+        <GraphqlErrorHandler err={error} ErrComponent={ErrorAlert} />
+      </AuthorsBox>
+    );
+  }
+
+  if (data && data.users.length === 0) {
+    return (
+      <AuthorsBox>
         <NotFound
           size="500px"
           NotFoundComp={AuthorImage}
           text="No Author's Available !"
         />
-      ) : (
-        data && data.users.map((user) => <Author key={user.id} author={user} />)
-      )}
-    </Box>
+      </AuthorsBox>
+    );
+  }
+
+  return (
+    <AuthorsBox>
+      {data && data.users.map((user) => <Author key={user.id} author={user} />)}
+    </AuthorsBox>
   );
+};
+
+AuthorsBox.propTypes = {
+  children: oneOfType([element, arrayOf(element)]).isRequired,
 };
 
 export default Authors;
