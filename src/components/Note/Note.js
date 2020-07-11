@@ -5,14 +5,18 @@ import {
 import ReactMarkdown from 'react-markdown';
 import { format } from 'date-fns';
 import {
-  Avatar, Box, Text, IconButton,
+  Avatar, Box, Text, IconButton, Link,
 } from '@chakra-ui/core';
 import { useQuery } from '@apollo/client';
+import { Link as RouterLink } from 'react-router-dom';
 
 import { noteByIdQuery } from '../../graphql/queries/note';
+import { isAuthenticated } from '../../utils/authHelpers';
+
 import { NotesLoader } from '../shared/Loader';
 import ErrorAlert from '../shared/ErrorAlert';
 import GraphqlErrorHandler from '../shared/GraphqlErrorHandler';
+import CustomIconButton from '../shared/CustomIconButton';
 
 const NoteBox = ({ children }) => (
   <Box
@@ -33,6 +37,7 @@ const NoteBox = ({ children }) => (
 );
 
 const Note = ({ match }) => {
+  const user = isAuthenticated();
   const { loading, error, data } = useQuery(noteByIdQuery, {
     variables: { id: match.params.noteId },
   });
@@ -67,6 +72,20 @@ const Note = ({ match }) => {
               {data.note.author.username}
             </Text>
           </Box>
+          {user && user.user.id === data.note.author.id && (
+            <Box d="flex" align="center" justify="space-between">
+              <Link
+                as={RouterLink}
+                to={{
+                  pathname: '/new-note',
+                  state: { note: { content: data.note.content } },
+                }}
+              >
+                <CustomIconButton icon="edit" label="edit note" />
+              </Link>
+              <CustomIconButton icon="delete" label="delete note" />
+            </Box>
+          )}
           <Text color="grey" fontSize="sm">
             {format(new Date(data.note.createdAt), 'MMM dd yyyy')}
           </Text>

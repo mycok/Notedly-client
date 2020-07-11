@@ -12,18 +12,18 @@ import {
   MenuButton,
   MenuList,
   MenuItemOption,
-  IconButton,
   Icon,
   MenuOptionGroup,
-  Tooltip,
   Textarea,
 } from '@chakra-ui/core';
 
 import { newNoteQuery } from '../../graphql/mutations/newNote';
 import { meQuery } from '../../graphql/queries/me';
 import GraphqlErrorHandler from '../shared/GraphqlErrorHandler';
-import ErrorAlert from '../shared/ErrorAlert';
 import { isAuthenticated } from '../../utils/authHelpers';
+
+import ErrorAlert from '../shared/ErrorAlert';
+import CustomIconButton from '../shared/CustomIconButton';
 
 const NewNoteBox = ({ children }) => (
   <Box
@@ -43,10 +43,14 @@ const NewNoteBox = ({ children }) => (
   </Box>
 );
 
-const NewNote = ({ history }) => {
+const NewNote = ({ history, location }) => {
   const user = isAuthenticated();
-  const [textValue, setTextValue] = useState('');
+  const [textValue, setTextValue] = useState(
+    location.state ? location.state.note.content : '',
+  );
   const [selected, select] = useState('Plain Text');
+
+  console.log('locationnnnnnnnn', location.state);
 
   const [newNote, { loading, error }] = useMutation(newNoteQuery, {
     refetchQueries: [{ query: meQuery }],
@@ -87,35 +91,8 @@ const NewNote = ({ history }) => {
 
         {selected === 'Plain Text' && (
           <Box d="flex" align="center" justify="space-between">
-            <Tooltip hasArrow label="Add image" placement="bottom" bg="#222121">
-              <IconButton
-                aria-label="add image"
-                icon="image"
-                color="white.800"
-                isRound
-                size="sm"
-                variant="outline"
-                borderWidth="2px"
-                borderColor="teal.800"
-                mr={5}
-                _hover={{ bg: '#3b4048' }}
-                _focus={{ outline: 'none' }}
-              />
-            </Tooltip>
-            <Tooltip hasArrow label="Add code" placement="bottom" bg="#222121">
-              <IconButton
-                aria-label="add code"
-                icon="code"
-                color="white.800"
-                isRound
-                size="sm"
-                variant="outline"
-                borderWidth="2px"
-                borderColor="teal.800"
-                _hover={{ bg: '#3b4048' }}
-                _focus={{ outline: 'none' }}
-              />
-            </Tooltip>
+            <CustomIconButton icon="image" label="add image" />
+            <CustomIconButton icon="code" label="add code" />
           </Box>
         )}
         <Box d="flex" alignItems="center" justifyContent="flex-end">
@@ -180,6 +157,7 @@ const NewNote = ({ history }) => {
 
 NewNote.propTypes = {
   history: instanceOf(Object).isRequired,
+  location: instanceOf(Object).isRequired,
 };
 
 NewNoteBox.propTypes = {
