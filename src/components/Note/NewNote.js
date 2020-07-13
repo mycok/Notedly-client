@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   instanceOf, element, oneOfType, arrayOf,
 } from 'prop-types';
@@ -15,10 +15,13 @@ import {
   Icon,
   MenuOptionGroup,
   Textarea,
+  CloseButton,
 } from '@chakra-ui/core';
 
 import { newNoteQuery } from '../../graphql/mutations/newNote';
+import { updateNoteMutation } from '../../graphql/mutations/updateNote';
 import { meQuery } from '../../graphql/queries/me';
+import { noteByIdQuery } from '../../graphql/queries/note';
 import GraphqlErrorHandler from '../shared/GraphqlErrorHandler';
 import { isAuthenticated } from '../../utils/authHelpers';
 
@@ -45,19 +48,37 @@ const NewNoteBox = ({ children }) => (
 
 const NewNote = ({ history, location }) => {
   const user = isAuthenticated();
+  const textFieldRef = useRef(null);
   const [textValue, setTextValue] = useState(
     location.state ? location.state.note.content : '',
   );
   const [selected, select] = useState('Plain Text');
 
-  console.log('locationnnnnnnnn', location.state);
+  const [newNote, { loading: creatingNote, error: newNoteError }] = useMutation(
+    newNoteQuery,
+    {
+      refetchQueries: [{ query: meQuery }],
+      onCompleted: () => {
+        history.push('/my-notes');
+      },
+    },
+  );
 
-  const [newNote, { loading, error }] = useMutation(newNoteQuery, {
-    refetchQueries: [{ query: meQuery }],
+  const [
+    updateNote,
+    { loading: updatingNote, error: updateNoteError },
+  ] = useMutation(updateNoteMutation, {
+    refetchQueries: [{ query: noteByIdQuery }],
     onCompleted: () => {
-      history.push('/my-notes');
+      history.push(`/notes/${location.state.note.id}`);
     },
   });
+
+  useEffect(() => {
+    if (location.state && textFieldRef.current) {
+      textFieldRef.current.focus();
+    }
+  }, [location.state]);
 
   const handleOnChange = (e) => {
     setTextValue(e.target.value);
@@ -67,10 +88,22 @@ const NewNote = ({ history, location }) => {
     newNote({ variables: { content: textValue } });
   };
 
-  if (error) {
+  const handleUpdateNote = () => {
+    updateNote({
+      variables: {
+        id: location.state.note.id,
+        content: textValue,
+      },
+    });
+  };
+
+  if (newNoteError || updateNoteError) {
     return (
       <NewNoteBox>
-        <GraphqlErrorHandler err={error} ErrComponent={ErrorAlert} />
+        <GraphqlErrorHandler
+          err={newNoteError || updateNoteError}
+          ErrComponent={ErrorAlert}
+        />
       </NewNoteBox>
     );
   }
@@ -89,12 +122,21 @@ const NewNote = ({ history, location }) => {
           </Text>
         </Box>
 
-        {selected === 'Plain Text' && (
-          <Box d="flex" align="center" justify="space-between">
-            <CustomIconButton icon="image" label="add image" />
-            <CustomIconButton icon="code" label="add code" />
-          </Box>
-        )}
+        <Box d="flex" align="center" justify="space-between">
+          {selected === 'Plain Text' && (
+            <>
+              <CustomIconButton icon="image" label="add image" />
+              <CustomIconButton icon="code" label="add code" />
+            </>
+          )}
+          <CloseButton
+            border="2px solid #065252"
+            size="md"
+            rounded="50%"
+            onClick={() => history.goBack()}
+          />
+        </Box>
+
         <Box d="flex" alignItems="center" justifyContent="flex-end">
           <Button
             variantColor="teal"
@@ -103,10 +145,10 @@ const NewNote = ({ history, location }) => {
             mr={10}
             _hover={{ bg: '#3b4048' }}
             _focus={{ outline: 'none' }}
-            isLoading={loading}
-            onClick={handleNewNote}
+            isLoading={!!creatingNote || !!updatingNote}
+            onClick={location.state ? handleUpdateNote : handleNewNote}
           >
-            Publish
+            {location.state ? 'Update' : 'Publish'}
           </Button>
 
           <Menu closeOnSelect>
@@ -140,15 +182,18 @@ const NewNote = ({ history, location }) => {
 
       <Box d="flex" alignItems="center" justifyContent="center" m={5}>
         <Textarea
+          ref={textFieldRef}
           value={textValue}
           placeholder="share something......."
           size="lg"
           bg="#222121"
+          mt={3}
           border="none"
+          focusBorderColor="teal.800"
           resize="vertical"
+          fontSize={16}
           minHeight={300}
           onChange={handleOnChange}
-          _focus={{ outline: 'none' }}
         />
       </Box>
     </NewNoteBox>

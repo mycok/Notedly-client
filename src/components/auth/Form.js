@@ -119,7 +119,7 @@ const Form = ({
     <SubmitButton
       loadingText={forSignup ? '...signing up...' : '...signing in...'}
       title={forSignup ? 'Sign Up' : 'Sign In'}
-      isLoading={loading}
+      isLoading={!!loading}
       areValuesProvided={state.areValuesProvided}
       handler={onSubmitHandler}
     />

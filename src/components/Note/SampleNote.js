@@ -32,11 +32,18 @@ const SampleNote = ({ note }) => {
           <Box d="flex" alignItems="center">
             <Avatar
               size="sm"
-              name={(note.author && note.author.username) || user.user.username}
-              src={(note.author && note.author.avatar) || user.user.avatar}
+              name={
+                (note.author && note.author.username)
+                || (user && user.user.username)
+              }
+              src={
+                (note.author && note.author.avatar)
+                || (user && user.user.avatar)
+              }
             />
             <Text ml={2} color="grey" fontSize="sm">
-              {(note.author && note.author.username) || user.user.username}
+              {(note.author && note.author.username)
+                || (user && user.user.username)}
             </Text>
           </Box>
           <Text color="grey" fontSize="sm">
