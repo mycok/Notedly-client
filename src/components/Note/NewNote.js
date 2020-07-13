@@ -15,7 +15,6 @@ import {
   Icon,
   MenuOptionGroup,
   Textarea,
-  CloseButton,
 } from '@chakra-ui/core';
 
 import { newNoteQuery } from '../../graphql/mutations/newNote';
@@ -129,11 +128,10 @@ const NewNote = ({ history, location }) => {
               <CustomIconButton icon="code" label="add code" />
             </>
           )}
-          <CloseButton
-            border="2px solid #065252"
-            size="md"
-            rounded="50%"
-            onClick={() => history.goBack()}
+          <CustomIconButton
+            icon="small-close"
+            label="close"
+            handler={() => history.goBack()}
           />
         </Box>
 

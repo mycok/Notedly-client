@@ -7,10 +7,13 @@ import { format } from 'date-fns';
 import {
   Avatar, Box, Text, IconButton, Link,
 } from '@chakra-ui/core';
-import { useQuery } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import { Link as RouterLink } from 'react-router-dom';
 
 import { noteByIdQuery } from '../../graphql/queries/note';
+import { meQuery } from '../../graphql/queries/me';
+import { noteFeedQuery } from '../../graphql/queries/noteFeed';
+import { deleteNoteMutation } from '../../graphql/mutations/deleteNote';
 import { isAuthenticated } from '../../utils/authHelpers';
 
 import { NotesLoader } from '../shared/Loader';
@@ -36,11 +39,23 @@ const NoteBox = ({ children }) => (
   </Box>
 );
 
-const Note = ({ match }) => {
+const Note = ({ match, history }) => {
   const user = isAuthenticated();
+
   const { loading, error, data } = useQuery(noteByIdQuery, {
     variables: { id: match.params.noteId },
   });
+  // TODO: - add delete error handling by prefferably displaying a toaster
+  const [deleteNote] = useMutation(deleteNoteMutation, {
+    refetchQueries: [{ query: noteFeedQuery }, { query: meQuery }],
+    onCompleted: () => {
+      history.goBack();
+    },
+  });
+
+  const handleNoteDelete = () => {
+    deleteNote({ variables: { id: match.params.noteId } });
+  };
 
   if (loading) {
     return (
@@ -83,7 +98,11 @@ const Note = ({ match }) => {
               >
                 <CustomIconButton icon="edit" label="edit note" />
               </Link>
-              <CustomIconButton icon="delete" label="delete note" />
+              <CustomIconButton
+                icon="delete"
+                label="delete note"
+                handler={handleNoteDelete}
+              />
             </Box>
           )}
           <Text color="grey" fontSize="sm">
@@ -117,6 +136,7 @@ const Note = ({ match }) => {
 
 Note.propTypes = {
   match: instanceOf(Object).isRequired,
+  history: instanceOf(Object).isRequired,
 };
 
 NoteBox.propTypes = {
