@@ -3,7 +3,7 @@ import { string } from 'prop-types';
 import { Tooltip, IconButton } from '@chakra-ui/core';
 
 const CustomIconButton = ({ icon, label }, props) => (
-  <Tooltip hasArrow label={label} placement="bottom" bg="#222121">
+  <Tooltip label={label} placement="bottom" bg="#222121" closeOnClick>
     <IconButton
       aria-label={label}
       icon={icon}

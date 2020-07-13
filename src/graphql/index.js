@@ -52,10 +52,10 @@ export const client = new ApolloClient({
         the local storage and prompt the user to login fresh
        */
       if (networkError) {
-        networkError.result.errors.map(({ extensions }) => {
+        networkError.result.errors.map(async ({ extensions }) => {
           if (extensions.code === 'UNAUTHENTICATED') {
             localStorage.removeItem('user');
-            client.resetStore();
+            await client.resetStore();
           }
         });
       }

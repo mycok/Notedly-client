@@ -78,7 +78,7 @@ const Note = ({ match }) => {
                 as={RouterLink}
                 to={{
                   pathname: '/new-note',
-                  state: { note: { content: data.note.content } },
+                  state: { note: data.note },
                 }}
               >
                 <CustomIconButton icon="edit" label="edit note" />
@@ -91,7 +91,7 @@ const Note = ({ match }) => {
           </Text>
         </Box>
 
-        <Box m={2} p={2}>
+        <Box mt={8} p={2}>
           <ReactMarkdown source={data.note.content} />
         </Box>
 
@@ -103,6 +103,7 @@ const Note = ({ match }) => {
             variantColor="red"
             aria-label="favorite a note"
             isRound
+            isDisabled={user && user.user.id === data.note.author.id}
             mr={3}
             _hover={{ bg: '#3b4048' }}
             _focus={{ borderColor: '#3b4048' }}
