@@ -54,7 +54,7 @@ const Header = (
       >
         {authenticatedUser && (
           <>
-            <Link as={RouterLink} to="/my-favorites">
+            <Link as={RouterLink} to="/favorites">
               <Tooltip label="My Favorites" placement="bottom" bg="#222121">
                 <IconButton
                   aria-label="favorites"

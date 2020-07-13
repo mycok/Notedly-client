@@ -9,6 +9,7 @@ import MyNotes from './note/MyNotes';
 import Auth from './auth';
 import Authors from './author/Authors';
 import NewNote from './note/NewNote';
+import Favorites from './note/Favorites';
 
 import ProtectedRoute from './shared/ProtectedRoute';
 
@@ -43,6 +44,7 @@ const AppRouter = () => {
         <Route exact path="/authors/:authorId/notes" component={AuthorNotes} />
         <ProtectedRoute exact path="/notes/:noteId" component={Note} />
         <ProtectedRoute exact path="/my-notes" component={MyNotes} />
+        <ProtectedRoute exact path="/favorites" component={Favorites} />
         <Route exact path="/authors" component={Authors} />
         <Route exact path="/new-note" component={NewNote} />
       </Switch>

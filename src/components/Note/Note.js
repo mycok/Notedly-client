@@ -14,6 +14,7 @@ import { noteByIdQuery } from '../../graphql/queries/note';
 import { meQuery } from '../../graphql/queries/me';
 import { noteFeedQuery } from '../../graphql/queries/noteFeed';
 import { deleteNoteMutation } from '../../graphql/mutations/deleteNote';
+import { toggleFavoriteMutation } from '../../graphql/mutations/favorite';
 import { isAuthenticated } from '../../utils/authHelpers';
 
 import { NotesLoader } from '../shared/Loader';
@@ -53,8 +54,19 @@ const Note = ({ match, history }) => {
     },
   });
 
+  const [toggleFavorite] = useMutation(toggleFavoriteMutation, {
+    refetchQueries: [
+      { query: noteByIdQuery, variables: { id: match.params.noteId } },
+      { query: meQuery },
+    ],
+  });
+
   const handleNoteDelete = () => {
     deleteNote({ variables: { id: match.params.noteId } });
+  };
+
+  const handleToggleFavorite = () => {
+    toggleFavorite({ variables: { id: match.params.noteId } });
   };
 
   if (loading) {
@@ -126,6 +138,9 @@ const Note = ({ match, history }) => {
             mr={3}
             _hover={{ bg: '#3b4048' }}
             _focus={{ borderColor: '#3b4048' }}
+            onMouseOver={() => null}
+            onFocus={() => null}
+            onClick={handleToggleFavorite}
           />
           <span>{data.note.favoriteCount}</span>
         </Box>
