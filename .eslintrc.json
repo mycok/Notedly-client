@@ -22,6 +22,19 @@
     "plugins": [
         "react"
     ],
+    "overrides": [
+        {
+          "files": ["./src/__test__ /**/*", "**/?(*.)+(spec|test).[jt]s?(x)"
+          ],
+          "env": {
+            "jest": true
+          },
+          "rules": {
+            "func-names": "off",
+            "prefer-arrow-callback": "off"
+          }
+        }
+      ],
     "rules": {
         "import/prefer-default-export": "off",
         "react/jsx-filename-extension": "off",

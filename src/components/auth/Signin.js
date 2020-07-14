@@ -1,6 +1,6 @@
 import React, { useEffect, useReducer } from 'react';
 import {
-  bool, func, instanceOf, any,
+  bool, func, shape, string,
 } from 'prop-types';
 
 import Form from './Form';
@@ -71,7 +71,7 @@ const Signin = ({
 
 Signin.propTypes = {
   loading: bool.isRequired,
-  serverError: instanceOf(any),
+  serverError: shape({ root: string.isRequired }),
   signIn: func.isRequired,
   setServerError: func.isRequired,
 };
