@@ -35,10 +35,20 @@ const Author = ({ author }) => {
               {username}
             </Text>
           </Box>
-          <Text fontSize="sm">{`Published Notes: ${notes.length}`}</Text>
+          <Box d="flex" alignItems="center" dir="column">
+            <Text fontSize="sm">
+              Notes Published:
+              {' '}
+              <Text as="span" color="teal.600" fontWeight={800}>
+                {`${notes.length}`}
+              </Text>
+            </Text>
+          </Box>
         </Box>
         <Box d="flex" mt={5} justifyContent="flex-end">
-          <Text fontSize="sm">{email}</Text>
+          <Text fontSize="sm" color="teal.600" fontWeight={800}>
+            {email}
+          </Text>
         </Box>
       </Box>
     </Link>
