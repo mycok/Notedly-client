@@ -22,7 +22,7 @@ import ErrorAlert from '../shared/ErrorAlert';
 import GraphqlErrorHandler from '../shared/GraphqlErrorHandler';
 import CustomIconButton from '../shared/CustomIconButton';
 
-const NoteBox = ({ children }) => (
+const SingleNoteBox = ({ children }) => (
   <Box
     borderWidth="1px"
     bg="#222121"
@@ -40,7 +40,7 @@ const NoteBox = ({ children }) => (
   </Box>
 );
 
-const Note = ({ match, history }) => {
+const SingleNote = ({ match, history }) => {
   const user = isAuthenticated();
 
   const { loading, error, data } = useQuery(noteByIdQuery, {
@@ -71,22 +71,22 @@ const Note = ({ match, history }) => {
 
   if (loading) {
     return (
-      <NoteBox>
+      <SingleNoteBox>
         <NotesLoader backgroundColor="#222121" />
-      </NoteBox>
+      </SingleNoteBox>
     );
   }
 
   if (error) {
     return (
-      <NoteBox>
+      <SingleNoteBox>
         <GraphqlErrorHandler err={error} ErrComponent={ErrorAlert} />
-      </NoteBox>
+      </SingleNoteBox>
     );
   }
 
   return (
-    <NoteBox>
+    <SingleNoteBox>
       <>
         <Box d="flex" justifyContent="space-between" alignItems="center">
           <Box d="flex" alignItems="center">
@@ -145,17 +145,17 @@ const Note = ({ match, history }) => {
           <span>{data.note.favoriteCount}</span>
         </Box>
       </>
-    </NoteBox>
+    </SingleNoteBox>
   );
 };
 
-Note.propTypes = {
+SingleNote.propTypes = {
   match: instanceOf(Object).isRequired,
   history: instanceOf(Object).isRequired,
 };
 
-NoteBox.propTypes = {
+SingleNoteBox.propTypes = {
   children: oneOfType([element, arrayOf(element)]).isRequired,
 };
 
-export default Note;
+export default SingleNote;
