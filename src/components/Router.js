@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import NavBar from './navigation';
 import Home from './core/Home';
-import Note from './note/Note';
+import SingleNote from './note/SingleNote';
 import AuthorNotes from './note/AuthorNotes';
 import MyNotes from './note/MyNotes';
 import Auth from './auth';
@@ -42,7 +42,7 @@ const AppRouter = () => {
           )}
         />
         <Route exact path="/authors/:authorId/notes" component={AuthorNotes} />
-        <ProtectedRoute exact path="/notes/:noteId" component={Note} />
+        <ProtectedRoute exact path="/notes/:noteId" component={SingleNote} />
         <ProtectedRoute exact path="/my-notes" component={MyNotes} />
         <ProtectedRoute exact path="/favorites" component={Favorites} />
         <Route exact path="/authors" component={Authors} />
