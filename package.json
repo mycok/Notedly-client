@@ -1,40 +1,38 @@
 {
-  "name": "notedly-client",
-  "version": "1.0.0",
+  "name": "notedly",
+  "version": "0.1.0",
+  "private": false,
   "description": "social note client application",
-  "main": "dist/index.html",
-  "source": [
-    "src/index.js",
-    "src/index.html"
-  ],
-  "scripts": {
-    "test": "jest",
-    "start": "rimraf dist && parcel src/index.html --no-autoinstall",
-    "build": "parcel build src/index.html --no-source-maps"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mycok/Notedly-client.git"
   },
-  "keywords": [
-    "React",
-    "styled-components"
-  ],
   "author": "mycok",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/mycok/Notedly-client/issues"
+  "dependencies": {
+    "@apollo/client": "^3.0.0-beta.44",
+    "@chakra-ui/core": "^0.8.0",
+    "@emotion/core": "^10.0.28",
+    "@emotion/styled": "^10.0.27",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "apollo-link-context": "^1.0.20",
+    "apollo-link-error": "^1.1.13",
+    "date-fns": "^2.13.0",
+    "emotion-theming": "^10.0.27",
+    "graphql": "^15.0.0",
+    "prop-types": "^15.7.2",
+    "react": "^17.0.1",
+    "react-content-loader": "^5.0.4",
+    "react-dom": "^17.0.1",
+    "react-infinite-scroll-component": "^5.0.5",
+    "react-markdown": "^4.3.1",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.1",
+    "web-vitals": "^0.2.4"
   },
-  "homepage": "https://github.com/mycok/Notedly-client#readme",
   "devDependencies": {
-    "@babel/core": "^7.9.6",
-    "@babel/plugin-transform-runtime": "^7.10.1",
-    "@babel/preset-env": "^7.9.6",
-    "@babel/preset-react": "^7.9.4",
-    "@parcel/transformer-svg-react": "^2.0.0-nightly.1739",
-    "@parcel/transformer-svgo": "^2.0.0-nightly.1739",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.1.0",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",
@@ -43,9 +41,25 @@
     "graphql-request": "^1.8.2",
     "husky": "^4.2.5",
     "lint-staged": ">=10",
-    "parcel": "^2.0.0-alpha.3.2",
-    "prettier": "2.0.5",
-    "rimraf": "^3.0.2"
+    "prettier": "2.0.5"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   },
   "husky": {
     "hooks": {
@@ -55,24 +69,5 @@
   "lint-staged": {
     "*.js": "eslint --cache --fix",
     "*.{js,css,md}": "prettier --write"
-  },
-  "dependencies": {
-    "@apollo/client": "^3.0.0-beta.44",
-    "@chakra-ui/core": "^0.8.0",
-    "@emotion/core": "^10.0.28",
-    "@emotion/styled": "^10.0.27",
-    "@types/react": "^16.9.35",
-    "apollo-link-context": "^1.0.20",
-    "apollo-link-error": "^1.1.13",
-    "date-fns": "^2.13.0",
-    "emotion-theming": "^10.0.27",
-    "graphql": "^15.0.0",
-    "prop-types": "^15.7.2",
-    "react": "^16.13.1",
-    "react-content-loader": "^5.0.4",
-    "react-dom": "^16.13.1",
-    "react-infinite-scroll-component": "^5.0.5",
-    "react-markdown": "^4.3.1",
-    "react-router-dom": "^5.2.0"
   }
 }

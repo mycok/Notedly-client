@@ -14,7 +14,7 @@ import {
   Tooltip,
 } from '@chakra-ui/core';
 
-import logo from 'url:../../images/logo.png';
+import logo from '../../images/logo.png';
 import MenuItems from './MenuItems';
 
 const Header = (

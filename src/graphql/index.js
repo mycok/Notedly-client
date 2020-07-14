@@ -9,8 +9,8 @@ import { onError } from 'apollo-link-error';
 import { isAuthenticated } from '../utils/authHelpers';
 
 const uri = process.env.NODE_ENV === 'production'
-  ? process.env.API_PROD_URL
-  : process.env.API_DEV_URL;
+  ? process.env.REACT_APP_API_PROD_URL
+  : process.env.REACT_APP_API_DEV_URL;
 const cache = new InMemoryCache();
 const httpLink = createHttpLink({ uri });
 
