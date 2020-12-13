@@ -1,5 +1,5 @@
 import React from 'react';
-import { string, func } from 'prop-types';
+import { string, any } from 'prop-types';
 import { Box, Text } from '@chakra-ui/core';
 
 const NotFound = ({ size, NotFoundComp, text }) => (
@@ -15,7 +15,7 @@ const NotFound = ({ size, NotFoundComp, text }) => (
 
 NotFound.propTypes = {
   size: string,
-  NotFoundComp: func.isRequired,
+  NotFoundComp: any.isRequired,
   text: string.isRequired,
 };
 

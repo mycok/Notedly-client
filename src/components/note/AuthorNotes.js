@@ -9,7 +9,7 @@ import { NotesLoader } from '../shared/Loader';
 import NoteFeed from './NoteFeed';
 import NotFound from '../shared/NotFound';
 import ErrorAlert from '../shared/ErrorAlert';
-import NotesImage from '../../images/notes.svg';
+import { ReactComponent as NotesImage } from '../../images/notes.svg';
 import GraphqlErrorHandler from '../shared/GraphqlErrorHandler';
 import { notesByAuthorQuery } from '../../graphql/queries/notesByAuthor';
 
