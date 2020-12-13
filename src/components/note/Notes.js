@@ -9,6 +9,7 @@ import { NotesLoader } from '../shared/Loader';
 import NotFound from '../shared/NotFound';
 import ErrorAlert from '../shared/ErrorAlert';
 import GraphqlErrorHandler from '../shared/GraphqlErrorHandler';
+import { ReactComponent as NotesImage } from '../../images/notes.svg';
 
 const Notes = () => {
   const {
@@ -46,7 +47,13 @@ const Notes = () => {
   }
 
   if (data.noteFeed.notes.length === 0) {
-    return <NotFound size="1000px" />;
+    return (
+      <NotFound
+        size="1000px"
+        NotFoundComp={NotesImage}
+        text="No Notes Available!"
+      />
+    );
   }
 
   return (

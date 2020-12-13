@@ -7,7 +7,7 @@ import { meQuery } from '../../graphql/queries/me';
 import NotFound from '../shared/NotFound';
 import NoteFeed from './NoteFeed';
 import { NotesLoader } from '../shared/Loader';
-import NotesImage from '../../images/notes.svg';
+import { ReactComponent as NotesImage } from '../../images/notes.svg';
 import ErrorAlert from '../shared/ErrorAlert';
 import GraphqlErrorHandler from '../shared/GraphqlErrorHandler';
 

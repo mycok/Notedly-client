@@ -9,7 +9,7 @@ import { usersQuery } from '../../graphql/queries/users';
 import GraphqlErrorHandler from '../shared/GraphqlErrorHandler';
 import ErrorAlert from '../shared/ErrorAlert';
 import NotFound from '../shared/NotFound';
-import AuthorImage from '../../images/authors.svg';
+import { ReactComponent as AuthorImage } from '../../images/authors.svg';
 
 const AuthorsBox = ({ children }) => (
   <Box dir="column" overflow="scroll" width="500px" padding={2} margin="auto">
